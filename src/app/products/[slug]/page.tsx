@@ -11,6 +11,7 @@ import { MechanismTeardown } from "@/components/site/mechanism-teardown";
 import { ProductIllustration } from "@/components/illustrations/product-illustration";
 import { DashboardMock } from "@/components/site/dashboard-mock";
 import { Cta } from "@/components/sections/cta";
+import { ContactButton } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl } from "@/lib/site";
 import {
@@ -130,12 +131,9 @@ export default async function ProductPage({
               )}
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  asChild
-                  className="h-12 rounded-lg bg-evara-ink px-6 text-sm font-medium text-white hover:bg-evara-navy-700"
-                >
-                  <a href={`mailto:${company.email}`}>Request Demo</a>
-                </Button>
+                <ContactButton className="h-12 rounded-lg bg-evara-ink px-6 text-sm font-medium text-white hover:bg-evara-navy-700">
+                  Request Demo
+                </ContactButton>
                 <Button
                   asChild
                   variant="outline"

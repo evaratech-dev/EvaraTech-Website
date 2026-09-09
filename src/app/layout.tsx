@@ -6,6 +6,7 @@ import { ScrollProgress } from "@/components/site/scroll-progress";
 import { AmbientBackground } from "@/components/site/ambient-background";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { RouteTransition } from "@/components/providers/route-transition";
+import { ContactDialogProvider } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/site";
 import { company } from "@/lib/evara-data";
@@ -147,14 +148,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <AmbientBackground />
-        <SmoothScroll>
-          <ScrollProgress />
-          <SiteNav />
-          <main id="main" className="flex-1 pt-20 sm:pt-24">
-            <RouteTransition>{children}</RouteTransition>
-          </main>
-          <SiteFooter />
-        </SmoothScroll>
+        <ContactDialogProvider>
+          <SmoothScroll>
+            <ScrollProgress />
+            <SiteNav />
+            <main id="main" className="flex-1 pt-20 sm:pt-24">
+              <RouteTransition>{children}</RouteTransition>
+            </main>
+            <SiteFooter />
+          </SmoothScroll>
+        </ContactDialogProvider>
       </body>
     </html>
   );

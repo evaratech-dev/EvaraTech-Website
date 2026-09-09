@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ContactButton } from "@/components/contact/contact-dialog";
 import {
   Sheet,
   SheetClose,
@@ -101,8 +102,7 @@ export function SiteNav() {
           </nav>
 
           <div className="hidden lg:block">
-            <Button
-              asChild
+            <ContactButton
               className={cn(
                 "h-10 rounded-full px-5 text-sm font-medium transition-colors",
                 overDark
@@ -110,8 +110,8 @@ export function SiteNav() {
                   : "bg-evara-ink text-white shadow-[0_10px_24px_-12px_rgba(15,33,56,0.55)] hover:bg-evara-navy-700"
               )}
             >
-              <a href="mailto:contact@evaratech.com">Request Demo</a>
-            </Button>
+              Request Demo
+            </ContactButton>
           </div>
 
           <Sheet open={open} onOpenChange={setOpen}>
@@ -155,12 +155,12 @@ export function SiteNav() {
                   ))}
                 </nav>
                 <div className="mt-auto px-2 pb-6">
-                  <Button
-                    asChild
+                  <ContactButton
+                    onClick={() => setOpen(false)}
                     className="h-14 w-full rounded-lg bg-evara-ink text-base font-medium text-white hover:bg-evara-navy-700"
                   >
-                    <a href="mailto:contact@evaratech.com">Request Demo</a>
-                  </Button>
+                    Request Demo
+                  </ContactButton>
                 </div>
               </div>
             </SheetContent>

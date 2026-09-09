@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/section";
 import { MaskReveal } from "@/components/site/reveal";
 import { Magnetic } from "@/components/site/magnetic";
+import { ContactButton } from "@/components/contact/contact-dialog";
 import { CountUp } from "@/components/site/count-up";
 
 /**
@@ -149,13 +150,12 @@ export function ProblemHero() {
               </Button>
             </Magnetic>
             <Magnetic>
-              <Button
-                asChild
+              <ContactButton
                 variant="outline"
                 className="h-[52px] rounded-xl border-white/25 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur-md hover:bg-white/20"
               >
-                <a href="mailto:contact@evaratech.com">Request Demo</a>
-              </Button>
+                Request Demo
+              </ContactButton>
             </Magnetic>
           </motion.div>
         </div>

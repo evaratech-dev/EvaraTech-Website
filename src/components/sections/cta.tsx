@@ -1,10 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Section, Container } from "@/components/site/section";
+import { ContactButton } from "@/components/contact/contact-dialog";
 import { fadeUp, revealViewport } from "@/lib/motion";
-import { company } from "@/lib/evara-data";
 
 export function Cta() {
   return (
@@ -35,19 +34,15 @@ export function Cta() {
             </p>
           </div>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <Button
-              asChild
-              className="h-12 rounded-xl bg-white px-6 text-sm font-medium text-evara-ink shadow-[0_10px_24px_-10px_rgba(0,0,0,0.5)] hover:bg-evara-mist"
-            >
-              <a href={`mailto:${company.email}`}>Request Demo</a>
-            </Button>
-            <Button
-              asChild
+            <ContactButton className="h-12 rounded-xl bg-white px-6 text-sm font-medium text-evara-ink shadow-[0_10px_24px_-10px_rgba(0,0,0,0.5)] hover:bg-evara-mist">
+              Request Demo
+            </ContactButton>
+            <ContactButton
               variant="outline"
               className="h-12 rounded-xl border-white/25 bg-white/[0.06] px-6 text-sm font-medium text-white backdrop-blur-xl hover:bg-white/[0.12]"
             >
-              <a href="#ecosystem">Talk to an Expert</a>
-            </Button>
+              Talk to an Expert
+            </ContactButton>
           </div>
         </motion.div>
       </Container>

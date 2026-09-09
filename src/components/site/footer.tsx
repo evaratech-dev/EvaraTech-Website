@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Container } from "@/components/site/section";
+import { ContactTrigger } from "@/components/contact/contact-dialog";
 import { company, products } from "@/lib/evara-data";
 
-const FOOTER_COLUMNS = [
+type FooterLink = { label: string; href?: string; action?: "contact" };
+
+const FOOTER_COLUMNS: { heading: string; links: FooterLink[] }[] = [
   {
     heading: "Products",
-    links: products
-      .slice(0, 4)
-      .map((p) => ({ label: p.name, href: "/#ecosystem" })),
+    links: products.slice(0, 4).map((p) => ({ label: p.name, href: "/#ecosystem" })),
   },
   {
     heading: "Platform",
@@ -24,7 +25,7 @@ const FOOTER_COLUMNS = [
       { label: "About Us", href: "/#proof" },
       { label: "Deployments", href: "/#proof" },
       { label: "Why EvaraTech", href: "/#proof" },
-      { label: "Contact", href: `mailto:${company.email}` },
+      { label: "Contact", action: "contact" },
     ],
   },
   {
@@ -36,6 +37,9 @@ const FOOTER_COLUMNS = [
     ],
   },
 ];
+
+const linkClass =
+  "inline-flex min-h-9 items-center text-sm text-muted-foreground transition-colors hover:text-white sm:min-h-0";
 
 export function SiteFooter() {
   return (
@@ -50,12 +54,9 @@ export function SiteFooter() {
               Building intelligent infrastructure that makes every drop of water
               measurable, predictable and optimizable.
             </p>
-            <a
-              href={`mailto:${company.email}`}
-              className="mt-4 inline-block text-sm text-evara-water-300 hover:text-white"
-            >
+            <ContactTrigger className="mt-3 inline-flex min-h-9 items-center text-sm text-evara-water-300 hover:text-white">
               {company.email}
-            </a>
+            </ContactTrigger>
           </div>
 
           {FOOTER_COLUMNS.map((col) => (
@@ -64,12 +65,15 @@ export function SiteFooter() {
               <ul className="mt-4 flex flex-col gap-2.5">
                 {col.links.map((link) => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
+                    {link.action === "contact" ? (
+                      <ContactTrigger className={linkClass}>
+                        {link.label}
+                      </ContactTrigger>
+                    ) : (
+                      <Link href={link.href ?? "/"} className={linkClass}>
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

@@ -20,15 +20,19 @@ export function Architecture() {
   return (
     <div id="architecture" className="relative bg-white">
       {/* Local tints only — the scrubber blends to white, so a full ambient
-          field at its edge would seam. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-24 right-[8%] size-[420px] rounded-full bg-evara-water/10 blur-[110px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute bottom-40 left-[6%] size-[380px] rounded-full bg-evara-teal/10 blur-[110px]"
-      />
+          field at its edge would seam. Clipped in their own layer so their
+          off-canvas overflow never widens the page on mobile, while the
+          section itself stays a non-scroll container (the scrubber pins). */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="absolute top-24 right-[8%] size-[420px] rounded-full bg-evara-water/10 blur-[110px]"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute bottom-40 left-[6%] size-[380px] rounded-full bg-evara-teal/10 blur-[110px]"
+        />
+      </div>
 
       {/* Intro */}
       <Section tone="paper" className="pb-6 sm:pb-8 lg:pb-10">

@@ -116,11 +116,6 @@ export const team = [
     role: "Hardware Lead",
     bio: "Electronics engineer specialising in PCB design, sensor integration and field deployment.",
   },
-  {
-    name: "Yasha Ambulkar",
-    role: "Software Lead",
-    bio: "Full-stack developer; cloud backend, IoT dashboards and MQTT platform development.",
-  },
 ];
 
 export const advisors = [
@@ -129,12 +124,6 @@ export const advisors = [
     role: "Technology Advisor",
     affiliation:
       "Associate Professor, Signal Processing & Communications Research Center, IIIT Hyderabad",
-  },
-  {
-    name: "Dr. Rehana Shaik",
-    role: "Hydrologist",
-    affiliation:
-      "Associate Professor, Lab for Spatial Informatics, IIIT Hyderabad",
   },
 ];
 
