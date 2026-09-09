@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# --- EvaraTech: repo hygiene ---
+# Local backup of pre-cutout product images (not needed to build/serve)
+/public/images/_originals
+
+# Confidential source brief — not part of the web app
+/EvaraTech_Catalogue_Brief.docx
+
+# Local-only Claude Code permission grants
+.claude/settings.local.json
+
+# Allow committing the environment example
+!.env.example
