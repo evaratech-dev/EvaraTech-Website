@@ -51,14 +51,16 @@ function ProductCardInner({
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-white to-transparent"
         />
-        <div className="relative flex h-44 items-center justify-center overflow-hidden bg-white/20 sm:h-52">
+        {/* Taller box and slimmer padding than a landscape crop would need:
+            these renders are upright devices, so height is what sells them. */}
+        <div className="relative flex h-52 items-center justify-center overflow-hidden bg-white/20 sm:h-60">
           {product.image ? (
             <Image
               src={product.image}
               alt={`${product.name} device`}
               fill
               sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
-              className="object-contain p-8 drop-shadow-[0_14px_18px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-[1.04]"
+              className="object-contain p-5 drop-shadow-[0_14px_18px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-[1.04]"
             />
           ) : (
             <ProductBlueprint />

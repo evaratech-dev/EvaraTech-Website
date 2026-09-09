@@ -11,7 +11,12 @@ export const SITE_URL = (
 
 export const SITE_NAME = "EvaraTech";
 
-export const SITE_TITLE = "EvaraTech — Intelligent Water Infrastructure";
+/**
+ * The company tagline, not a description of the product — this is the line
+ * that shows as the headline wherever the site is shared (WhatsApp, Slack,
+ * LinkedIn, Google), so it has to read as the brand.
+ */
+export const SITE_TITLE = "EvaraTech — Your Universe of Sustainable Solutions";
 
 export const SITE_DESCRIPTION =
   "Smart IoT devices and an AI-powered platform for real-time water intelligence — retrofit onto the tanks, borewells, meters and pumps you already have, with no pipe cutting and no civil work.";

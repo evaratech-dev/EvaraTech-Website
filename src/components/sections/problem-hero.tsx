@@ -23,11 +23,13 @@ import { CountUp } from "@/components/site/count-up";
  * scene, held still. Every stat figure is one EvaraTech publishes.
  */
 
+// Framed as impact rather than inventory — the same published figures, said
+// the way the company measures itself.
 const STATS = [
-  { icon: Droplets, value: 2.5, decimals: 1, suffix: "M+", label: "Litres monitored" },
-  { icon: Radio, value: 120, decimals: 0, suffix: "+", label: "Devices installed" },
-  { icon: MapPin, value: 15, decimals: 0, suffix: "+", label: "Active sites" },
-  { icon: Activity, value: 99.9, decimals: 1, suffix: "%", label: "System uptime" },
+  { icon: Droplets, value: 2.5, decimals: 1, suffix: "M+", label: "Litres of water protected" },
+  { icon: Radio, value: 120, decimals: 0, suffix: "+", label: "Devices in the field" },
+  { icon: MapPin, value: 15, decimals: 0, suffix: "+", label: "Communities served" },
+  { icon: Activity, value: 99.9, decimals: 1, suffix: "%", label: "Always watching" },
 ];
 
 export function ProblemHero() {
@@ -106,9 +108,9 @@ export function ProblemHero() {
             </p>
           </MaskReveal>
 
-          <h1 className="mt-5 font-heading text-[2.75rem] leading-[1.0] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.5rem]">
-            <MaskReveal delay={0.05}>Every drop has</MaskReveal>
-            <MaskReveal delay={0.12}>value. We make</MaskReveal>
+          <h1 className="mt-5 font-heading text-[2.5rem] leading-[1.03] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.5rem]">
+            <MaskReveal delay={0.05}>Your universe of</MaskReveal>
+            <MaskReveal delay={0.12}>sustainable</MaskReveal>
             <span className="block overflow-hidden">
               <motion.span
                 initial={reduced ? { opacity: 0 } : { y: "110%" }}
@@ -116,7 +118,7 @@ export function ProblemHero() {
                 transition={{ duration: 0.9, delay: 0.19, ease: [0.16, 1, 0.3, 1] }}
                 className="block"
               >
-                it <span className="text-evara-teal-300">count.</span>
+                <span className="text-evara-teal-300">solutions.</span>
               </motion.span>
             </span>
           </h1>
@@ -127,9 +129,9 @@ export function ProblemHero() {
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 max-w-md text-base leading-relaxed text-white/70 sm:text-lg"
           >
-            Smart IoT devices and an AI-powered platform for real-time water
-            intelligence — retrofit onto the infrastructure you already have,
-            with no pipe cutting and no civil work.
+            We make the water infrastructure you already own intelligent —
+            borewells, tanks, meters, pumps and valves — so every drop is
+            measured, predicted and protected.
           </motion.p>
 
           <motion.div

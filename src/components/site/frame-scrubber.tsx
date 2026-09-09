@@ -20,19 +20,22 @@ export function FrameScrubber({
   count,
   ext = "webp",
   pinHeight = "220vh",
+  pinHeightMobile,
   children,
   className,
   fit = "cover",
   softEdges = true,
   tint = true,
   clearColor = "#ffffff",
-  framed = false,
+  plate = false,
   aspect = 16 / 9,
 }: {
   dir: string;
   count: number;
   ext?: string;
   pinHeight?: string;
+  /** Shorter pin on small screens — the same travel over less scrolling. */
+  pinHeightMobile?: string;
   children?: React.ReactNode;
   className?: string;
   /** "cover" fills the screen and may crop; "contain" shows the whole frame
@@ -44,11 +47,12 @@ export function FrameScrubber({
   tint?: boolean;
   /** Letterbox / clear colour behind a "contain" frame. */
   clearColor?: string;
-  /** Present the footage in a centred, rounded card at its own aspect ratio
-   *  — every slide fully visible, nothing cropped. Best for labelled diagrams
-   *  where full-bleed would shear the edges. */
-  framed?: boolean;
-  /** Card aspect ratio when `framed` (width / height). */
+  /** Show the footage whole, at its own aspect ratio, with its edges feathered
+   *  into the page — nothing cropped and no card around it. Best for a
+   *  labelled diagram, where full-bleed would shear the labels off the edges
+   *  and a framed card would read as a screenshot pasted onto the page. */
+  plate?: boolean;
+  /** Plate aspect ratio (width / height) — match the source frames. */
   aspect?: number;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -209,20 +213,44 @@ export function FrameScrubber({
         WebkitMaskComposite: "source-in",
       };
 
-  // Framed: the footage lives in a centred card at its own aspect ratio, so
-  // every slide is shown whole. Full-bleed instead fills the screen.
-  if (framed) {
+  // Plate: the footage occupies a box at its own aspect ratio, so every slide
+  // is shown whole, and its edges are feathered so the page dissolves the
+  // border instead of a card outlining it. A gentle 4-5% feather — the source
+  // carries labels close to its edges, so a deeper fade would eat them.
+  if (plate) {
+    const plateMask =
+      "linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4.5%, #000 95.5%, transparent 100%)";
     return (
-      <div ref={sectionRef} className="relative" style={{ height: pinHeight }}>
-        <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden px-4 sm:px-8">
+      <div
+        ref={sectionRef}
+        className="relative h-[var(--pin-h-sm)] sm:h-[var(--pin-h)]"
+        style={
+          {
+            "--pin-h-sm": pinHeightMobile ?? pinHeight,
+            "--pin-h": pinHeight,
+          } as React.CSSProperties
+        }
+      >
+        {/* The sticky box hugs the plate on small screens. A 16:9 plate is only
+            ~200px tall at phone width, so a full-height sticky strands it in a
+            field of empty page — which reads as the page having broken rather
+            than as composition. Half the viewport leaves it breathing room and
+            still clears the floating nav. */}
+        <div className="sticky top-0 flex h-[50svh] w-full items-center justify-center px-3 sm:h-[100svh] sm:px-8">
           <div
-            className="relative w-full max-w-[1180px] overflow-hidden rounded-2xl ring-1 ring-black/[0.06] shadow-[0_50px_120px_-45px_rgba(15,33,56,0.5)]"
-            style={{ aspectRatio: String(aspect), background: clearColor }}
+            className="relative w-full max-w-[1180px]"
+            style={{ aspectRatio: String(aspect) }}
           >
             <canvas
               ref={canvasRef}
               aria-hidden="true"
               className="absolute inset-0 h-full w-full"
+              style={{
+                maskImage: plateMask,
+                WebkitMaskImage: plateMask,
+                maskComposite: "intersect",
+                WebkitMaskComposite: "source-in",
+              }}
             />
             {tint && (
               <div
@@ -230,15 +258,10 @@ export function FrameScrubber({
                 className="pointer-events-none absolute inset-0 bg-evara-water-100/25 mix-blend-soft-light"
               />
             )}
-            {/* Specular top edge */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-white/70 to-transparent"
-            />
           </div>
 
           {progress < 1 && (
-            <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2">
+            <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 sm:bottom-8">
               <div className="h-0.5 w-40 overflow-hidden rounded-full bg-evara-line">
                 <div
                   className="h-full bg-evara-water transition-[width] duration-200"

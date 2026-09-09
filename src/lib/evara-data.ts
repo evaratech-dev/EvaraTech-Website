@@ -155,6 +155,10 @@ export type Product = {
   howItWorks: string;
   /** Ordered teardown of the operating principle — drives the product page. */
   mechanism?: { step: string; detail: string }[];
+  /** What the device is for, in the customer's words. */
+  applications?: string[];
+  /** Headline capabilities, as published on the product sheet. */
+  features?: { title: string; detail: string }[];
   specs: { label: string; value: string }[];
   image?: string;
   /** Additional real photography, including field installs. */
@@ -184,6 +188,30 @@ export const company = {
     "One Platform. Complete Control. Intelligent Water Infrastructure.",
   mission:
     "Building intelligent infrastructure that makes every drop of water measurable, predictable and optimizable.",
+  vision:
+    "A world where no drop is wasted — where every tank, borewell, meter and pump can think, report and protect the water it carries.",
+  values: [
+    {
+      title: "Retrofit first",
+      detail:
+        "We add intelligence to what already exists. Nothing is ripped out, no pipe is cut, no community waits on civil work.",
+    },
+    {
+      title: "Measure before you claim",
+      detail:
+        "Every number we publish comes from a device in the field. Water problems are solved with evidence, not estimates.",
+    },
+    {
+      title: "Built for the hard places",
+      detail:
+        "Rural borewells, monsoon rooftops, industrial pump rooms. If it does not survive there, it is not finished.",
+    },
+    {
+      title: "Sustainability is the product",
+      detail:
+        "Saved water, protected pumps and lower energy per litre are the outcomes we are measured on.",
+    },
+  ],
   coreIdea:
     "EvaraTech makes existing water infrastructure — borewells, tanks, meters and pumps — smart by adding non-intrusive IoT devices on top of them, so users get real-time data, AI-powered alerts and remote control without replacing anything.",
   differentiator:
@@ -321,8 +349,23 @@ export const products: Product[] = [
       { label: "Battery", value: "1000 mAh, deep sleep" },
       { label: "Bonus", value: "Contactless temperature sensing" },
     ],
-    image: "/images/products/evaratank-1.png",
-    gallery: ["/images/products/evaratank-2.png"],
+    applications: [
+      "Overhead tanks, residential & commercial",
+      "Apartments & gated communities",
+      "Industrial water storage",
+      "Hotels, hospitals & institutions",
+      "Smart cities & municipalities",
+      "Agriculture & irrigation",
+    ],
+    features: [
+      { title: "Live level monitoring", detail: "Accurate, real-time water level and volume tracking." },
+      { title: "Overflow & empty alerts", detail: "Instant notification before a tank spills or a pump runs dry." },
+      { title: "Leakage & flow monitoring", detail: "Detects leaks and measures fill and draw rates in real time." },
+      { title: "Temperature compensation", detail: "Contactless temperature sensing keeps readings accurate as conditions change." },
+      { title: "Long battery life", detail: "Up to 30 days of backup through a blackout." },
+      { title: "Rugged & reliable", detail: "IP65 waterproof design for rooftop exposure." },
+    ],
+    image: "/images/products/evaratank.webp",
     hasSpecSheet: true,
     accent: "water",
   },
@@ -374,7 +417,24 @@ export const products: Product[] = [
       { label: "Connectivity", value: "WiFi / BLE / LoRaWAN / 4G-5G" },
       { label: "Battery", value: "2000 mAh backup" },
     ],
-    image: "/images/products/evaradeep.png",
+    applications: [
+      "Borewells, residential & community",
+      "Deep tanks & sumps",
+      "Agriculture & irrigation",
+      "Industrial water supply",
+      "Smart cities & municipalities",
+      "Construction sites",
+      "Remote & off-grid locations",
+    ],
+    features: [
+      { title: "Live level monitoring", detail: "Accurate, real-time tracking of the water column." },
+      { title: "Low water level alerts", detail: "Instant warning to prevent dry-run damage and scarcity." },
+      { title: "Leakage insight", detail: "Detects abnormal usage patterns against normal drawdown." },
+      { title: "Historical data & trends", detail: "Tracks long-term groundwater behaviour and overnight recharge." },
+      { title: "Long battery life", detail: "Up to 15 days of backup in case of blackout." },
+      { title: "Rugged & reliable", detail: "IP65 waterproof design for harsh environments." },
+    ],
+    image: "/images/products/evaradeep.webp",
     gallery: [
       "/images/deployments/borewell-install-1.jpg",
       "/images/deployments/node-1.jpg",
@@ -430,7 +490,23 @@ export const products: Product[] = [
       { label: "Power", value: "5V 1A + 3000 mAh backup" },
       { label: "Leak detection", value: "Night-flow analysis" },
     ],
-    image: "/images/products/evaraflow.png",
+    applications: [
+      "Smart water distribution",
+      "Irrigation management",
+      "Industrial water systems",
+      "Apartments & communities",
+      "Commercial buildings",
+      "Municipal water supply",
+    ],
+    features: [
+      { title: "Easy retrofit", detail: "Plug-and-play installation on any analog meter." },
+      { title: "AI digit recognition", detail: "Reads the dial on-device at up to 97% accuracy, offline." },
+      { title: "Leakage detection", detail: "Night-flow analysis surfaces silent leaks nobody is watching for." },
+      { title: "Local data storage", detail: "Images and readings are held on the device when the network drops." },
+      { title: "Long battery life", detail: "Up to 14 days of backup." },
+      { title: "Compact & durable", detail: "IP67 rated for real-world meter chambers." },
+    ],
+    image: "/images/products/evaraflow.webp",
     price: "₹10K",
     hasSpecSheet: true,
     accent: "teal",
@@ -469,15 +545,34 @@ export const products: Product[] = [
       },
     ],
     specs: [
-      { label: "Valve size", value: "DN50 – DN450 (tbc)" },
-      { label: "Control", value: "Remote open / close / throttle" },
-      { label: "Automation", value: "Rule and schedule based" },
-      { label: "Metering", value: "Real-time flow and consumption" },
-      { label: "Billing", value: "User, time and location attribution" },
-      { label: "Connectivity", value: "To be confirmed" },
+      { label: "Valve type", value: "2-way motorised ball valve" },
+      { label: "Available sizes", value: "DN15 (½\") – DN50 (2\")" },
+      { label: "Operation time", value: "5 – 8 seconds, open or close" },
+      { label: "Body material", value: "Stainless steel 304 / brass, PTFE seal" },
+      { label: "Protection", value: "IP67, water and dust proof" },
+      { label: "Manual override", value: "Yes — local operation on power or network loss" },
+      { label: "Connectivity", value: "4G / NB-IoT / WiFi / LoRaWAN / BLE" },
+      { label: "Pressure rating", value: "PN16" },
     ],
-    image: "/images/products/evaravalve.png",
-    hasSpecSheet: false,
+    applications: [
+      "Municipal water distribution",
+      "Irrigation & agriculture",
+      "Industrial water systems",
+      "Smart buildings & campuses",
+      "Leakage control zones",
+      "Tanker filling & transfer lines",
+      "Water treatment plants",
+    ],
+    features: [
+      { title: "Remote control", detail: "Open or close from anywhere via dashboard or mobile app." },
+      { title: "Automated operation", detail: "Schedule, automate and integrate with the rest of the site." },
+      { title: "Leakage prevention", detail: "Instant shut-off limits water loss and damage." },
+      { title: "Flow management", detail: "Accurate control for fair, efficient distribution." },
+      { title: "Manual override", detail: "Easy local operation if power or network fails." },
+      { title: "Rugged & reliable", detail: "Corrosion-resistant body built for long life in tough environments." },
+    ],
+    image: "/images/products/evaravalve.webp",
+    hasSpecSheet: true,
     accent: "water",
   },
   {
@@ -513,6 +608,19 @@ export const products: Product[] = [
       { label: "Protection", value: "Phase failure, dry-run, overload" },
       { label: "Control", value: "Mobile app ON/OFF, IoT telemetry" },
       { label: "Connectivity", value: "GSM and WiFi" },
+    ],
+    applications: [
+      "Agricultural borewell pumps",
+      "Irrigation systems",
+      "Industrial motor rooms",
+      "Apartment & campus pump rooms",
+      "Remote & off-grid pumping",
+    ],
+    features: [
+      { title: "Control from anywhere", detail: "Start and stop the pump from your phone — no walk to the field." },
+      { title: "Phase-fault protection", detail: "Cuts the motor on single-phasing before a winding burns out." },
+      { title: "Dry-run protection", detail: "Stops the pump when there is no water to draw." },
+      { title: "Voltage monitoring", detail: "Watches every phase feeding the motor, continuously." },
     ],
     hasSpecSheet: true,
     accent: "leaf",
@@ -558,7 +666,24 @@ export const products: Product[] = [
       { label: "Detection", value: "Dry-run, overload, current spikes" },
       { label: "Enclosure", value: "IP65 weatherproof" },
     ],
-    image: "/images/products/evaraamp.png",
+    applications: [
+      "Industrial motors & pumps",
+      "Water supply & distribution",
+      "HVAC systems",
+      "Manufacturing units",
+      "Agriculture irrigation systems",
+      "Commercial buildings",
+      "Solar pump applications",
+    ],
+    features: [
+      { title: "Real-time monitoring", detail: "Live current, voltage, power and energy tracking." },
+      { title: "Motor protection", detail: "Detects overload, underload, phase loss and imbalance." },
+      { title: "Energy optimisation", detail: "Track consumption and cut cost per litre pumped." },
+      { title: "Instant alerts", detail: "Notified by app, SMS or email the moment a fault appears." },
+      { title: "Easy installation", detail: "Compact DIN-rail or wall mount with a clip-on CT sensor." },
+      { title: "Built for plant rooms", detail: "Flame-retardant ABS body, rated for industrial panels." },
+    ],
+    image: "/images/products/evaraamp.webp",
     hasSpecSheet: true,
     accent: "water",
   },
@@ -603,7 +728,25 @@ export const products: Product[] = [
       { label: "Filtering", value: "Median-based noise rejection" },
       { label: "Output", value: "Web dashboard and Android app" },
     ],
-    hasSpecSheet: false,
+    applications: [
+      "Drinking water quality monitoring",
+      "RO plant monitoring",
+      "Water treatment plants",
+      "Industrial process water",
+      "Aquaculture & hydroponics",
+      "Swimming pools",
+      "Community water projects",
+    ],
+    features: [
+      { title: "Real-time TDS monitoring", detail: "Continuous measurement across the full 0 – 2000 ppm range." },
+      { title: "Temperature compensation", detail: "A built-in sensor corrects readings that conductivity alone would skew." },
+      { title: "Threshold alerts", detail: "Custom warnings for high TDS and failing water quality." },
+      { title: "Cloud connected", detail: "Live sync with the EvaraOne dashboard." },
+      { title: "Data insights", detail: "Historical trends, reports and quality analytics." },
+      { title: "Anti-corrosion probe", detail: "Titanium alloy probe holds accuracy over the long term." },
+    ],
+    image: "/images/products/evaratds.webp",
+    hasSpecSheet: true,
     accent: "teal",
   },
   {
@@ -647,8 +790,25 @@ export const products: Product[] = [
       { label: "Applications", value: "Agriculture, flood warning, watersheds" },
       { label: "Output", value: "Via EvaraOne dashboard" },
     ],
-    image: "/images/products/evararain.png",
-    hasSpecSheet: false,
+    applications: [
+      "Smart cities & municipalities",
+      "Flood monitoring & early warning",
+      "Water resource management",
+      "Agriculture & irrigation planning",
+      "Dams, reservoirs & watersheds",
+      "Industrial & construction sites",
+      "Weather stations & research",
+    ],
+    features: [
+      { title: "Accurate measurement", detail: "High-precision tipping bucket, 0.2 mm per tip." },
+      { title: "Real-time data", detail: "Live rainfall depth and intensity streamed to EvaraOne." },
+      { title: "Smart alerts", detail: "Instant notification for heavy rainfall and threshold breaches." },
+      { title: "Self-emptying design", detail: "Prevents overflow and keeps measurement accurate unattended." },
+      { title: "Two-year battery", detail: "Low-power design for remote field sites." },
+      { title: "Weatherproof", detail: "UV-resistant IP65 body built for permanent outdoor exposure." },
+    ],
+    image: "/images/products/evararain.webp",
+    hasSpecSheet: true,
     accent: "leaf",
   },
 ];

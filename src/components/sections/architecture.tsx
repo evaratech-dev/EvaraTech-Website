@@ -35,7 +35,7 @@ export function Architecture() {
       </div>
 
       {/* Intro */}
-      <Section tone="paper" className="pb-6 sm:pb-8 lg:pb-10">
+      <Section tone="paper" className="pb-2 sm:pb-8 lg:pb-10">
         <Container>
           <div className="mx-auto max-w-3xl text-center">
             <MaskReveal>
@@ -95,19 +95,23 @@ export function Architecture() {
         </Container>
       </Section>
 
-      {/* Scroll-scrubbed ecosystem film, framed in a centred card at its own
-          16:9 ratio so every device and label stays fully visible — a
-          labelled diagram must never be cropped by a full-bleed crop. */}
+      {/* Scroll-scrubbed ecosystem film, shown whole at its own 16:9 ratio so
+          no device or label is sheared off, with its edges feathered into the
+          page rather than boxed in a card. The pin is shorter on mobile: the
+          plate is only ~190px tall there, and a full 300vh of travel for it
+          reads as the page having stalled. */}
       <FrameScrubber
         dir="/frames/evaraone"
         count={120}
         pinHeight="300vh"
-        framed
+        pinHeightMobile="200vh"
+        plate
+        fit="contain"
         tint={false}
       />
 
       {/* Closing metrics strip */}
-      <Section tone="paper" className="pt-6 sm:pt-8">
+      <Section tone="paper" className="pt-2 sm:pt-8">
         <Container>
           <motion.dl
             variants={staggerContainer(0.08)}
