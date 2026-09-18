@@ -10,7 +10,7 @@ import { problemScale, products } from "@/lib/evara-data";
 
 /**
  * Names each way water disappears, then names the instrument that closes it.
- * Problem and answer sit in the same row deliberately — the pairing is the
+ * Problem and answer sit in the same row deliberately. The pairing is the
  * argument.
  */
 export function LossCauses() {
@@ -20,7 +20,7 @@ export function LossCauses() {
         <SectionHeading
           kicker="Where it goes"
           title="Four leaks in the system. Four instruments."
-          description="Loss is not one problem, it is four — and each one disappears the moment the infrastructure can report on itself."
+          description="Loss is not one problem, it is four. Each one disappears the moment the infrastructure can report on itself."
         />
 
         <motion.ul

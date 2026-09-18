@@ -28,7 +28,7 @@ export function SectionHeading({
       whileInView="show"
       viewport={revealViewport}
       className={cn(
-        "max-w-2xl",
+        "max-w-3xl",
         align === "center" && "mx-auto text-center",
         className
       )}
@@ -45,7 +45,7 @@ export function SectionHeading({
       )}
       <h2
         className={cn(
-          "text-balance text-[1.75rem] leading-[1.15] font-semibold tracking-tight sm:text-4xl",
+          "text-balance text-[1.85rem] leading-[1.12] font-semibold tracking-tight sm:text-4xl lg:text-5xl",
           tone === "inverted" ? "text-white" : "text-evara-ink"
         )}
       >
@@ -54,7 +54,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-4 text-balance text-base leading-relaxed",
+            "mt-4 text-balance text-base leading-relaxed sm:text-lg",
             tone === "inverted" ? "text-muted-foreground" : "text-evara-slate"
           )}
         >

@@ -8,7 +8,7 @@ import Lenis from "lenis";
  * loop and dispatches real `scroll` events as it does, so Framer Motion's
  * `useScroll` (which listens to those events) tracks it with no extra glue.
  *
- * Disabled entirely under reduced motion — scroll hijacking is the single
+ * Disabled entirely under reduced motion: scroll hijacking is the single
  * most disorienting effect for motion-sensitive users, so it is removed
  * rather than softened.
  */

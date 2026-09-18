@@ -28,35 +28,43 @@ export function FrameScrubber({
   tint = true,
   clearColor = "#ffffff",
   plate = false,
+  ambient = false,
   aspect = 16 / 9,
 }: {
   dir: string;
   count: number;
   ext?: string;
   pinHeight?: string;
-  /** Shorter pin on small screens — the same travel over less scrolling. */
+  /** Shorter pin on small screens: the same travel over less scrolling. */
   pinHeightMobile?: string;
   children?: React.ReactNode;
   className?: string;
   /** "cover" fills the screen and may crop; "contain" shows the whole frame
    *  and letterboxes into `clearColor` (ideal for a composed, labelled shot). */
   fit?: "cover" | "contain";
-  /** Radial edge mask — off when the frame's own edges carry content. */
+  /** Radial edge mask. Off when the frame's own edges carry content. */
   softEdges?: boolean;
   /** Soft-light accent wash over the footage. */
   tint?: boolean;
   /** Letterbox / clear colour behind a "contain" frame. */
   clearColor?: string;
   /** Show the footage whole, at its own aspect ratio, with its edges feathered
-   *  into the page — nothing cropped and no card around it. Best for a
+   *  into the page. Nothing cropped and no card around it. Best for a
    *  labelled diagram, where full-bleed would shear the labels off the edges
    *  and a framed card would read as a screenshot pasted onto the page. */
   plate?: boolean;
-  /** Plate aspect ratio (width / height) — match the source frames. */
+  /** With `plate`: fill the whole viewport behind the plate with a blurred,
+   *  enlarged copy of the same frame, the way a TV app fills the bars around
+   *  a film. The screen is covered edge to edge by the footage's own colour,
+   *  the sharp frame is never cropped, and the feathered plate dissolves into
+   *  its own blur rather than into white. */
+  ambient?: boolean;
+  /** Plate aspect ratio (width / height). Match the source frames. */
   aspect?: number;
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const ambientRef = useRef<HTMLCanvasElement>(null);
   const framesRef = useRef<(ImageBitmap | HTMLImageElement | undefined)[]>([]);
   const drawnRef = useRef(-1);
   const reduced = useReducedMotion();
@@ -105,8 +113,26 @@ export function FrameScrubber({
         }
         ctx.drawImage(frame, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
         drawnRef.current = i;
+
+        // The ambient backdrop is a 96px-wide thumbnail stretched over the
+        // viewport and blurred in CSS. Painting it tiny and blurring it big
+        // costs almost nothing and looks identical to blurring a full frame.
+        const amb = ambientRef.current;
+        const actx = amb?.getContext("2d");
+        if (amb && actx) {
+          const aw = amb.width;
+          const ah = amb.height;
+          const s = Math.max(aw / frame.width, ah / frame.height);
+          actx.drawImage(
+            frame,
+            (aw - frame.width * s) / 2,
+            (ah - frame.height * s) / 2,
+            frame.width * s,
+            frame.height * s
+          );
+        }
       } catch {
-        /* detached bitmap — keep the last good frame on screen */
+        /* detached bitmap: keep the last good frame on screen */
       }
     },
     [count, fit, clearColor]
@@ -214,9 +240,10 @@ export function FrameScrubber({
       };
 
   // Plate: the footage occupies a box at its own aspect ratio, so every slide
-  // is shown whole, and its edges are feathered so the page dissolves the
-  // border instead of a card outlining it. A gentle 4-5% feather — the source
-  // carries labels close to its edges, so a deeper fade would eat them.
+  // is shown whole, and its edges are feathered so whatever is behind it
+  // dissolves the border instead of a card outlining it. A gentle 4-5%
+  // feather: the source carries labels close to its edges, so a deeper fade
+  // would eat them.
   if (plate) {
     const plateMask =
       "linear-gradient(to right, transparent 0, #000 5%, #000 95%, transparent 100%), linear-gradient(to bottom, transparent 0, #000 4.5%, #000 95.5%, transparent 100%)";
@@ -231,14 +258,40 @@ export function FrameScrubber({
           } as React.CSSProperties
         }
       >
-        {/* The sticky box hugs the plate on small screens. A 16:9 plate is only
-            ~200px tall at phone width, so a full-height sticky strands it in a
-            field of empty page — which reads as the page having broken rather
-            than as composition. Half the viewport leaves it breathing room and
-            still clears the floating nav. */}
-        <div className="sticky top-0 flex h-[50svh] w-full items-center justify-center px-3 sm:h-[100svh] sm:px-8">
+        {/* With an ambient backdrop the sticky box always fills the viewport:
+            the space around the plate is the film's own colour, not empty
+            page. Without one it hugs the plate on phones, where a 16:9 plate
+            is ~200px tall and a full-height sticky would strand it. */}
+        <div
+          className={
+            ambient
+              ? "sticky top-0 flex h-[100svh] w-full items-center justify-center overflow-hidden px-3 sm:px-8"
+              : "sticky top-0 flex h-[50svh] w-full items-center justify-center px-3 sm:h-[100svh] sm:px-8"
+          }
+        >
+          {ambient && (
+            <canvas
+              ref={ambientRef}
+              width={96}
+              height={54}
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full scale-110 blur-[3vw] saturate-[1.15] brightness-[0.96]"
+            />
+          )}
+          {ambient && (
+            // Fade the backdrop into the page above and below so the section
+            // arrives and leaves softly instead of with a hard horizon.
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to bottom, #ffffff 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 86%, #ffffff 100%)",
+              }}
+            />
+          )}
           <div
-            className="relative w-full max-w-[1180px]"
+            className="relative w-full max-w-[110rem]"
             style={{ aspectRatio: String(aspect) }}
           >
             <canvas

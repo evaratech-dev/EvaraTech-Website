@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/site";
 
-/** Web app manifest — installability and correct icon/theme on mobile. */
+/** Web app manifest: installability and correct icon/theme on mobile. */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "EvaraTech — Intelligent Water Infrastructure",
+    name: "EvaraTech - Your Universe of Sustainable Solutions",
     short_name: SITE_NAME,
     description: SITE_DESCRIPTION,
     start_url: "/",

@@ -5,7 +5,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 /**
- * Demo-request form, submitted straight to Web3Forms over fetch — no backend,
+ * Demo-request form, submitted straight to Web3Forms over fetch. No backend,
  * so it works on a static Vercel deploy. The access key is a public
  * client-side key by Web3Forms' design; an env var can override it.
  *
@@ -34,7 +34,7 @@ export function ContactForm({ onSuccess }: { onSuccess?: () => void }) {
 
     const data = new FormData(form);
     data.append("access_key", ACCESS_KEY);
-    data.append("subject", "New demo request — evaratech.com");
+    data.append("subject", "New demo request from evaratech.com");
     data.append("from_name", "EvaraTech Website");
 
     try {
@@ -66,7 +66,7 @@ export function ContactForm({ onSuccess }: { onSuccess?: () => void }) {
           <CheckCircle2 className="size-6" />
         </span>
         <h3 className="font-heading text-lg font-semibold text-evara-ink">
-          Thanks — we&rsquo;ve got it.
+          Thanks, we&rsquo;ve got it.
         </h3>
         <p className="text-sm text-evara-slate">
           The EvaraTech team will get back to you shortly.
@@ -85,7 +85,7 @@ export function ContactForm({ onSuccess }: { onSuccess?: () => void }) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      {/* Honeypot — hidden from people, catches bots */}
+      {/* Honeypot: hidden from people, catches bots */}
       <input
         type="checkbox"
         name="botcheck"

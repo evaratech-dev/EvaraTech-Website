@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Magnetic hover: the element leans toward the pointer, then springs back.
- * Pointer-driven only, so it never fires on touch — where it would just
+ * Pointer-driven only, so it never fires on touch, where it would just
  * feel like a mis-tap.
  */
 export function Magnetic({

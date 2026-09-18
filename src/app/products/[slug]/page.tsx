@@ -11,7 +11,7 @@ import { Cta } from "@/components/sections/cta";
 import { ContactButton } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl } from "@/lib/site";
-import { products, company, illustratedSlugs } from "@/lib/evara-data";
+import { products, listedProducts, company, illustratedSlugs } from "@/lib/evara-data";
 
 type Params = { slug: string };
 
@@ -28,8 +28,8 @@ export async function generateMetadata({
   const product = products.find((p) => p.slug === slug);
   if (!product) return { title: { absolute: "Product not found | EvaraTech" } };
 
-  // Bare title — the root layout's "%s | EvaraTech" template appends the brand.
-  const title = `${product.name} — ${product.tagline}`;
+  // Bare title. The root layout's "%s | EvaraTech" template appends the brand.
+  const title = `${product.name}: ${product.tagline}`;
   const description = product.oneLine;
   const path = `/products/${product.slug}`;
 
@@ -62,8 +62,10 @@ export default async function ProductPage({
   const product = products.find((p) => p.slug === slug);
   if (!product) notFound();
 
-  const index = products.findIndex((p) => p.slug === slug);
-  const next = products[(index + 1) % products.length];
+  // "Next" walks the listed set only, so an unlisted page still hands off to
+  // a listed one and a listed page never hands off to an unlisted one.
+  const index = listedProducts.findIndex((p) => p.slug === slug);
+  const next = listedProducts[(index + 1) % listedProducts.length];
 
   const productLd = {
     "@context": "https://schema.org",
@@ -81,7 +83,7 @@ export default async function ProductPage({
     <>
       <JsonLd data={productLd} />
 
-      {/* Hero — the device, shown large and uncluttered */}
+      {/* Hero: the device, shown large and uncluttered */}
       <section className="relative overflow-hidden bg-lab-wash">
         <Container className="relative py-10 sm:py-14 lg:py-20">
           <nav aria-label="Breadcrumb" className="text-sm text-evara-slate">
@@ -170,7 +172,7 @@ export default async function ProductPage({
         </Container>
       </Section>
 
-      {/* How it works — the drawn principle, then the steps, laid out flat.
+      {/* How it works: the drawn principle, then the steps, laid out flat.
           No scroll pinning: the reader takes it in at their own pace. */}
       <Section tone="paper" id="how-it-works" className="pt-0">
         <Container>
@@ -238,7 +240,7 @@ export default async function ProductPage({
               <SectionHeading
                 kicker="Where it's used"
                 title="Built for these places."
-                description="Retrofit-first, so it installs onto infrastructure that is already there — no pipe cutting, no civil work, no permits."
+                description="Retrofit-first, so it installs onto infrastructure that is already there. No pipe cutting, no civil work, no permits."
               />
               <ul className="grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 lg:pt-10">
                 {product.applications.map((a) => (
@@ -295,7 +297,7 @@ export default async function ProductPage({
               align="center"
               kicker="Connected to EvaraOne"
               title="Every reading lands in one platform."
-              description="Live monitoring, alerts with voice output, AI forecasting and reporting — across every device and every site, from a single building to an entire district."
+              description="Live monitoring, alerts with voice output, AI forecasting and reporting across every device and every site, from a single building to an entire district."
             />
             <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
               <Button

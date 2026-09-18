@@ -115,7 +115,7 @@ export function PumpControl() {
           Phase failure
         </text>
         <text x="308" y="192" className="fill-[#8f2f2b] text-[8px]">
-          L3 lost — pump stopped
+          L3 lost, pump stopped
         </text>
         <text x="308" y="206" className="fill-[#8f2f2b] text-[8px]">
           automatically

@@ -8,8 +8,8 @@ import { ContactForm } from "./contact-form";
 
 /**
  * One demo-request modal for the whole site. A provider high in the tree holds
- * the open state and exposes `open()`; any button anywhere — even inside a
- * Server Component — triggers it through {@link ContactButton} /
+ * the open state and exposes `open()`; any button anywhere, even inside a
+ * Server Component, triggers it through {@link ContactButton} /
  * {@link ContactTrigger}, which read the context at the client boundary.
  */
 type ContactCtx = { open: () => void; close: () => void };

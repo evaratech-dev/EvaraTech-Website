@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * EvaraDeep borewell cross-section. The patented mechanism sits at the top
- * of the casing and derives depth without any sensor entering the water —
+ * of the casing and derives depth without any sensor entering the water;
  * the point of the drawing is that the device and the water never meet.
  */
 export function BorewellSection() {
@@ -46,7 +46,7 @@ export function BorewellSection() {
       {/* Casing */}
       <rect x="176" y="96" width="68" height="410" fill="#f7f9fc" stroke="#b9c3d0" strokeWidth="2" />
 
-      {/* Water column — recharges and depletes */}
+      {/* Water column: recharges and depletes */}
       <clipPath id="wellClip">
         <rect x="178" y="98" width="64" height="406" />
       </clipPath>
@@ -66,7 +66,7 @@ export function BorewellSection() {
         />
       </g>
 
-      {/* Device at the wellhead — motor, encoder and tension switch */}
+      {/* Device at the wellhead: motor, encoder and tension switch */}
       <rect x="158" y="52" width="104" height="44" rx="8" fill="#0f2138" />
       {/* Spool the string pays out from */}
       <motion.circle
@@ -123,7 +123,7 @@ export function BorewellSection() {
         floating bob
       </text>
       <text x="252" y="298" className="fill-evara-slate text-[9px]">
-        string only — no electronics
+        string only, no electronics
       </text>
 
       {/* Depth scale */}

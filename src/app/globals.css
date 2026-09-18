@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ==========================================================================
-   EVARA SCIENTIFIC OS — design tokens
+   EVARA SCIENTIFIC OS design tokens
    Brand source: EvaraTech_Catalogue_Brief (leaf green / water blue / navy / teal)
    ========================================================================== */
 
@@ -52,7 +52,7 @@
   --radius-3xl: calc(var(--radius) * 2.5);
   --radius-4xl: calc(var(--radius) * 3);
 
-  /* Raw brand palette — exposed as utilities (bg-evara-ink, text-evara-water, …) */
+  /* Raw brand palette, exposed as utilities (bg-evara-ink, text-evara-water, ...) */
   --color-evara-navy-950: #0a1420;
   --color-evara-navy-900: #101d2d;
   --color-evara-navy-800: #17293c;
@@ -74,7 +74,7 @@
   --color-evara-leaf-300: #a8dd8e;
   --color-evara-amber: #e0a400;
 
-  /* Light "science lab" surfaces — the base canvas of the site */
+  /* Light "science lab" surfaces, the base canvas of the site */
   --color-evara-paper: #ffffff;
   --color-evara-mist: #f7f9fc;
   --color-evara-fog: #eef2f8;
@@ -85,9 +85,12 @@
   --color-evara-slate: #5c6b80;
   --color-evara-slate-400: #8a97a8;
 
-  /* Motion language — slow, purposeful, engineered */
+  /* Motion language: slow, purposeful, engineered */
   --ease-signal: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Beyond the laptop: 4K desktops and TVs */
+  --breakpoint-3xl: 120rem;
 }
 
 :root {
@@ -125,7 +128,7 @@
   --sidebar-ring: #1c75bc;
 }
 
-/* Scoped dark surface — used only for the footer and closing CTA band */
+/* Scoped dark surface, used only for the footer and closing CTA band */
 .dark {
   --background: #101d2d;
   --foreground: #f7f9fc;
@@ -170,6 +173,12 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* The whole site is set in rem, so scaling the root scales type, spacing
+       and layout together. Held at 16px on phones, grows with the viewport
+       through laptops, caps at 22px so a TV reads as a bigger laptop rather
+       than a billboard. Breakpoints are unaffected: media queries resolve rem
+       against the initial 16px, not this value. */
+    font-size: clamp(16px, 0.85rem + 0.45vw, 22px);
   }
   h1, h2, h3, h4 {
     @apply font-heading;
@@ -187,7 +196,7 @@
 }
 
 @layer utilities {
-  /* Soft lab-light wash used behind hero and feature sections */
+  /* Soft lab-light wash used behind hero and feature sections. */
   .bg-lab-wash {
     background:
       radial-gradient(60% 50% at 78% 18%, rgba(156, 201, 236, 0.35) 0%, transparent 60%),
@@ -200,7 +209,7 @@
       linear-gradient(180deg, #fbfcfe 0%, #f3f6fb 100%);
   }
   /* Product renders are cut out to transparent PNG, so shadows are cast with
-     drop-shadow() on the image itself — it follows the real silhouette
+     drop-shadow() on the image itself. It follows the real silhouette
      rather than sitting under it as a fixed ellipse. */
 }
 
@@ -218,14 +227,16 @@
 
 @layer utilities {
   .container-evara {
-    @apply mx-auto w-full max-w-[1440px] px-6 sm:px-8 lg:px-12 xl:px-16;
+    /* rem, not px, so the measure widens with the root scale above and a
+       2560px display gets a 1900px column instead of a 1440px island. */
+    @apply mx-auto w-full max-w-[88rem] px-5 sm:px-8 lg:px-12 xl:px-16;
   }
   .text-balance {
     text-wrap: balance;
   }
 }
 
-/* Film grain — tiled fractal-noise data URI, drifting so it never looks like
+/* Film grain: tiled fractal-noise data URI, drifting so it never looks like
    a static screen door. Multiply blend so it darkens rather than fogs. */
 .hero-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -245,7 +256,7 @@
   .hero-grain { animation: none; }
 }
 
-/* Trust marquee — one track holding two identical lists, translated by half
+/* Trust marquee: one track holding two identical lists, translated by half
    its width so the wrap is seamless. */
 .marquee-track {
   animation: marquee 38s linear infinite;

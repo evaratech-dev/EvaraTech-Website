@@ -14,6 +14,12 @@ export const illustratedSlugs = new Set([
   "evararain",
 ]);
 
+/**
+ * Products with no photo-real render yet. Their pages stay reachable, but they
+ * are kept off the product row, footer and any other listing until one exists.
+ */
+export const unlistedProductSlugs = new Set(["evaraphase"]);
+
 /** Every product below has a generated page at /products/[slug]. */
 export const builtProductSlugs = new Set([
   "evaratank",
@@ -34,7 +40,7 @@ export const problemScale = {
   lossLow: 40,
   lossHigh: 60,
   claim:
-    "India loses 40–60% of its urban water supply to leakage, theft and analog billing errors.",
+    "India loses 40 to 60% of its urban water supply to leakage, theft and analog billing errors.",
   sources: ["CSE", "CPHEEO", "NITI Aayog", "Global Water Forum"],
   causes: [
     {
@@ -105,26 +111,39 @@ export const team = [
     name: "Ritik Pradip Yelekar",
     role: "Founder & CEO",
     bio: "M.S. Research IIIT-H, B.E. Electronics SVPCET. IoT-water researcher and patent holder; previously CTO at Hydroeverse.",
+    focus: ["Product vision", "Water-IoT research", "Patents & IP", "Partnerships"],
+    quote: "I have watched tanks overflow onto the street in a city that trucks water in. That gap is what we close.",
   },
   {
     name: "Aditya Bhagwan Deole",
     role: "Co-Founder & CTO",
     bio: "B.Tech. Embedded systems, firmware and sensor hardware, with 3+ years of development experience.",
+    focus: ["Firmware", "Sensor hardware", "Edge AI", "Connectivity"],
+    quote: "Every device has to survive a rooftop monsoon and a two-week blackout. Nothing ships until it does.",
+  },
+  {
+    name: "Dr. Sachin Chaudhari",
+    role: "Technical Advisor & Co-founder",
+    bio: "Associate Professor, Signal Processing & Communications Research Center, IIIT Hyderabad. Guides the sensing and signal work behind every device.",
+    focus: ["Signal processing", "Sensing research", "Academic pipeline", "Validation"],
+    quote: "Good water data is a signal-processing problem before it is a software problem.",
   },
   {
     name: "Jagan Mohan Reddy",
     role: "Hardware Lead",
     bio: "Electronics engineer specialising in PCB design, sensor integration and field deployment.",
+    focus: ["PCB design", "Sensor integration", "Field installs", "Manufacturing"],
+    quote: "If an installer can fit it in ten minutes without a manual, the board is finished.",
   },
 ];
 
-export const advisors = [
-  {
-    name: "Dr. Sachin Chaudhari",
-    role: "Technology Advisor",
-    affiliation:
-      "Associate Professor, Signal Processing & Communications Research Center, IIIT Hyderabad",
-  },
+/** The road from a research bench to the field, in the order it happened. */
+export const journey = [
+  { year: "2022", title: "The patent", detail: "Indian Patent 202241055442 granted for IoT borewell and tank water-level tracking, assigned jointly with IIIT Hyderabad." },
+  { year: "2023", title: "First devices in the field", detail: "EvaraFlow retrofits go live on real analog meters. Night-flow analysis finds its first silent leaks." },
+  { year: "2024", title: "Rashtrapati Nilayam", detail: "Borewell and tank monitoring deployed at the Presidential Residence, Hyderabad." },
+  { year: "2025", title: "EvaraTech Private Limited", detail: "Incorporated 10 October 2025. Sangareddy district brings 50+ monitoring nodes onto public infrastructure." },
+  { year: "Now", title: "EvaraOne", detail: "Eight instruments reporting into one platform, from a single tank to an entire district." },
 ];
 
 export const research = {
@@ -153,7 +172,7 @@ export type Product = {
   oneLine: string;
   problem: string;
   howItWorks: string;
-  /** Ordered teardown of the operating principle — drives the product page. */
+  /** Ordered teardown of the operating principle. Drives the product page. */
   mechanism?: { step: string; detail: string }[];
   /** What the device is for, in the customer's words. */
   applications?: string[];
@@ -180,7 +199,7 @@ export const company = {
   ],
   tagline: "Your universe of Sustainable Solutions",
   supportingLine: "Monitoring. Automating. Optimizing.",
-  /** Live-site headline voice — evaratech.com */
+  /** Live-site headline voice, evaratech.com */
   headline: "Your Water Intelligence Platform",
   subhead: "Sustainable Intelligence",
   promise: "Every drop monitored. Every insight actionable.",
@@ -189,7 +208,7 @@ export const company = {
   mission:
     "Building intelligent infrastructure that makes every drop of water measurable, predictable and optimizable.",
   vision:
-    "A world where no drop is wasted — where every tank, borewell, meter and pump can think, report and protect the water it carries.",
+    "A world where no drop is wasted, where every tank, borewell, meter and pump can think, report and protect the water it carries.",
   values: [
     {
       title: "Retrofit first",
@@ -213,9 +232,9 @@ export const company = {
     },
   ],
   coreIdea:
-    "EvaraTech makes existing water infrastructure — borewells, tanks, meters and pumps — smart by adding non-intrusive IoT devices on top of them, so users get real-time data, AI-powered alerts and remote control without replacing anything.",
+    "EvaraTech makes existing water infrastructure smart. Borewells, tanks, meters and pumps get non-intrusive IoT devices added on top, so users get real-time data, AI-powered alerts and remote control without replacing anything.",
   differentiator:
-    "Most smart water solutions require breaking pipes, replacing meters or submerging sensors — expensive, intrusive and impractical at scale. EvaraTech's products clip on, sit above or attach externally: no infrastructure replacement, no civil work, no water contact.",
+    "Most smart water solutions require breaking pipes, replacing meters or submerging sensors. That is expensive, intrusive and impractical at scale. EvaraTech's products clip on, sit above or attach externally: no infrastructure replacement, no civil work, no water contact.",
   email: "contact@evaratech.com",
   web: "www.evaratech.com",
 };
@@ -232,12 +251,6 @@ export const liveMetrics = [
   { value: 99.9, suffix: "%", decimals: 1, label: "System uptime" },
 ];
 
-export const secondaryMetrics = [
-  { value: "±2%", label: "Measurement accuracy" },
-  { value: "2.5M", label: "Data points processed" },
-  { value: "24/7", label: "Support coverage" },
-];
-
 export const audiences = [
   "Governments & municipal water bodies",
   "Smart cities & infrastructure",
@@ -251,7 +264,7 @@ export const differentiators = [
   {
     title: "Retrofit-first architecture",
     detail:
-      "Clip-on, non-contact devices. No pipe cutting, no civil work, no permits — roughly 10x cheaper to deploy than replacement.",
+      "Clip-on, non-contact devices. No pipe cutting, no civil work, no permits, and roughly 10x cheaper to deploy than replacement.",
   },
   {
     title: "Granted Indian patent",
@@ -261,7 +274,7 @@ export const differentiators = [
   {
     title: "On-device AI",
     detail:
-      "97% digit-recognition accuracy on EvaraFlow, running on-device — works offline, no cloud dependency for core metering.",
+      "97% digit-recognition accuracy on EvaraFlow, running on the device itself. Works offline, with no cloud dependency for core metering.",
   },
   {
     title: "Full-stack platform",
@@ -276,17 +289,17 @@ export const differentiators = [
 export const deployments = [
   {
     place: "IIIT Hyderabad",
-    detail: "Bakul Boys Hostel — tank monitoring + ML research testbed",
+    detail: "Bakul Boys Hostel. Tank monitoring and ML research testbed",
   },
   {
     place: "Rashtrapati Nilayam",
-    detail: "Hyderabad — the Presidential Residence",
+    detail: "Hyderabad. The Presidential Residence",
   },
-  { place: "Lulu Mall", detail: "Hyderabad — commercial deployment" },
-  { place: "Jakkur Lake", detail: "Bangalore — open water-body monitoring" },
+  { place: "Lulu Mall", detail: "Hyderabad. Commercial deployment" },
+  { place: "Jakkur Lake", detail: "Bangalore. Open water-body monitoring" },
   {
     place: "Sangareddy District",
-    detail: "Rudraram — 50+ water monitoring nodes, public infrastructure",
+    detail: "Rudraram. 50+ water monitoring nodes on public infrastructure",
   },
 ];
 
@@ -311,7 +324,7 @@ export const products: Product[] = [
     problem:
       "Every home, hotel, hospital, school and apartment has overhead tanks, yet nobody knows when they are full, half-empty or dry. Tanks overflow and waste water; pumps run dry and burn out; climbing to the roof to check is unsafe and impractical.",
     howItWorks:
-      "EvaraTank sits on top of the tank and times an ultrasonic pulse to the water surface and back. It estimates inflow and outflow, detects leaks, and sends overflow alerts — without ever contacting the water.",
+      "EvaraTank sits on top of the tank and times an ultrasonic pulse to the water surface and back. It estimates inflow and outflow, detects leaks, and sends overflow alerts without ever contacting the water.",
     mechanism: [
       {
         step: "Trigger",
@@ -375,7 +388,7 @@ export const products: Product[] = [
     tagline: "The patented borewell brain",
     category: "Borewell Intelligence",
     oneLine:
-      "Live borewell water level, runtime and dry-run protection — with no electronics inside the well.",
+      "Live borewell water level, runtime and dry-run protection, with no electronics inside the well.",
     problem:
       "Farmers and rural communities depend on borewells but nobody knows how much water is left. Pumps run blindly, wells run dry mid-irrigation and damage motors, and overnight recharge goes unnoticed. Sensors dropped into the water corrode and are expensive to replace.",
     howItWorks:
@@ -394,7 +407,7 @@ export const products: Product[] = [
       {
         step: "Measure",
         detail:
-          "The encoder reports the exact length of string paid out — that length is the depth to water.",
+          "The encoder reports the exact length of string paid out. That length is the depth to water.",
       },
       {
         step: "Retract",
@@ -450,7 +463,7 @@ export const products: Product[] = [
     oneLine:
       "Turns any existing analog meter smart with a clip-on camera and on-device Edge AI. No pipe cutting.",
     problem:
-      "Most water meters in India are analog, with spinning dials read manually once a month. No leak detection, no real-time data, and replacing them with digital meters costs thousands per meter — impossible for apartments, factories and municipalities with hundreds of meters.",
+      "Most water meters in India are analog, with spinning dials read manually once a month. No leak detection, no real-time data, and replacing them with digital meters costs thousands per meter, which is impossible for apartments, factories and municipalities with hundreds of meters.",
     howItWorks:
       "EvaraFlow clips onto the existing analog meter. Its camera captures the dial, an on-device AI model reads the digits, and the reading is sent to the cloud. No pipe cutting, no replacement, no plumber.",
     mechanism: [
@@ -467,7 +480,7 @@ export const products: Product[] = [
       {
         step: "Infer",
         detail:
-          "A deep-learning OCR model runs on the onboard quad-core ARM processor, resolving digits at 97% accuracy — entirely offline.",
+          "A deep-learning OCR model runs on the onboard quad-core ARM processor, resolving digits at 97% accuracy, entirely offline.",
       },
       {
         step: "Analyse",
@@ -519,9 +532,9 @@ export const products: Product[] = [
     oneLine:
       "Turns a conventional pipeline into a connected, remotely controllable, data-driven distribution system.",
     problem:
-      "Water distribution is managed by manually opening and closing valves across sites — slow, labour-intensive and error-prone. Operators cannot react quickly to demand, leaks or scheduling needs, and there is no record of who changed what.",
+      "Water distribution is managed by manually opening and closing valves across sites. It is slow, labour-intensive and error-prone. Operators cannot react quickly to demand, leaks or scheduling needs, and there is no record of who changed what.",
     howItWorks:
-      "EvaraValve is a motorised valve actuator with metering built in. Rather than simply opening and closing, it measures consumption, automates supply on rules, detects abnormal usage, and reports to EvaraOne — enabling fair, transparent, automated billing.",
+      "EvaraValve is a motorised valve actuator with metering built in. Rather than simply opening and closing, it measures consumption, automates supply on rules, detects abnormal usage, and reports to EvaraOne, enabling fair, transparent, automated billing.",
     mechanism: [
       {
         step: "Meter",
@@ -550,7 +563,7 @@ export const products: Product[] = [
       { label: "Operation time", value: "5 – 8 seconds, open or close" },
       { label: "Body material", value: "Stainless steel 304 / brass, PTFE seal" },
       { label: "Protection", value: "IP67, water and dust proof" },
-      { label: "Manual override", value: "Yes — local operation on power or network loss" },
+      { label: "Manual override", value: "Yes, local operation on power or network loss" },
       { label: "Connectivity", value: "4G / NB-IoT / WiFi / LoRaWAN / BLE" },
       { label: "Pressure rating", value: "PN16" },
     ],
@@ -583,7 +596,7 @@ export const products: Product[] = [
     oneLine:
       "Start and stop pumps from your phone, with automatic protection from voltage and phase faults.",
     problem:
-      "Farmers physically walk to the pump to switch it on and off — in heat, rain or at night. Industrial pumps need protection from single-phasing, overload and low voltage, but most rural and agricultural pumps have none. A failed motor costs ₹10,000 to ₹50,000 to replace.",
+      "Farmers physically walk to the pump to switch it on and off, in heat, rain or at night. Industrial pumps need protection from single-phasing, overload and low voltage, but most rural and agricultural pumps have none. A failed motor costs ₹10,000 to ₹50,000 to replace.",
     howItWorks:
       "EvaraPhase is a smart pump starter controlled from a mobile app. It continuously monitors voltage across all phases and automatically shuts the pump down on voltage drop, phase failure or dry run.",
     mechanism: [
@@ -617,7 +630,7 @@ export const products: Product[] = [
       "Remote & off-grid pumping",
     ],
     features: [
-      { title: "Control from anywhere", detail: "Start and stop the pump from your phone — no walk to the field." },
+      { title: "Control from anywhere", detail: "Start and stop the pump from your phone. No walk to the field." },
       { title: "Phase-fault protection", detail: "Cuts the motor on single-phasing before a winding burns out." },
       { title: "Dry-run protection", detail: "Stops the pump when there is no water to draw." },
       { title: "Voltage monitoring", detail: "Watches every phase feeding the motor, continuously." },
@@ -633,9 +646,9 @@ export const products: Product[] = [
     oneLine:
       "Clamp-on current sensing that watches pump electrical health and warns before failure.",
     problem:
-      "Pumps are the heart of any water system. They fail from dry running, voltage spikes, overload or aging windings, and there is no early-warning system today — operators only find out when the pump dies.",
+      "Pumps are the heart of any water system. They fail from dry running, voltage spikes, overload or aging windings, and there is no early-warning system today. Operators only find out when the pump dies.",
     howItWorks:
-      "EvaraAMP clamps a split-core current transducer around the line feeding the motor — no circuit interruption. It tracks RMS current sub-second, spots abnormal signatures, and totals energy for billing and efficiency.",
+      "EvaraAMP clamps a split-core current transducer around the line feeding the motor, with no circuit interruption. It tracks RMS current sub-second, spots abnormal signatures, and totals energy for billing and efficiency.",
     mechanism: [
       {
         step: "Clamp",
@@ -813,10 +826,64 @@ export const products: Product[] = [
   },
 ];
 
+/** Products shown on the site's listings: the row, the footer, "next product". */
+export const listedProducts = products.filter((p) => !unlistedProductSlugs.has(p.slug));
+
+const WORDS = ["", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+/** "Seven instruments" reads better than "7 instruments" in a headline. */
+export const listedCountWord = WORDS[listedProducts.length] ?? String(listedProducts.length);
+
 export const evaraOne = {
   name: "EvaraOne",
   tagline: "The brain behind everything",
   category: "Unified Cloud Platform",
   oneLine:
     "One AI-powered web and mobile dashboard for monitoring, analytics, alerts and automation across every device and site.",
+  /** Who logs in, and what each of them sees. From the EvaraOne SRS. */
+  roles: [
+    {
+      name: "Command",
+      who: "EvaraTech operations",
+      detail: "Every deployment, device and user across the platform. Allocates devices, sets system-wide parameters, watches platform health.",
+    },
+    {
+      name: "Admin",
+      who: "Distributors and partners",
+      detail: "Only the customers, sites and devices they have deployed. Onboarding, device registration, deployment tracking, reporting.",
+    },
+    {
+      name: "Customer",
+      who: "Societies, institutions, facilities",
+      detail: "Only their own premises. Water availability, consumption, trends, alerts and downloadable reports.",
+    },
+  ],
+  /** What the platform computes per instrument, again from the SRS. */
+  intelligence: [
+    {
+      device: "EvaraTank",
+      watches: "Level, volume, available litres, consumption",
+      computes: "Consumption trends over 24 hours, 3, 7 and 30 days. Daily refill cycle identification. Abnormal usage detection.",
+      alerts: "Low level, overflow risk, rapid depletion, device offline",
+    },
+    {
+      device: "EvaraDeep",
+      watches: "Static and dynamic water level, recharge rate",
+      computes: "Long-term groundwater trends, seasonal variation, borewell sustainability indicators.",
+      alerts: "Critical depth thresholds, source health",
+    },
+    {
+      device: "EvaraFlow",
+      watches: "Instantaneous flow, cumulative usage",
+      computes: "Daily, weekly and monthly consumption. Peak-period identification. Time-based comparison.",
+      alerts: "Continuous flow (leak), unusual spike, no-flow condition",
+    },
+  ],
+  capabilities: [
+    "Real-time and historical views over any time range",
+    "Alert history you can audit, not just a notification",
+    "Reports in shareable formats for offline analysis",
+    "Multi-tenant: one platform for manufacturer, distributor and end user",
+    "Keeps working through partial network or device failure",
+    "Role-scoped access so each user sees only their own scope",
+  ],
 };

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 type GlassPanelProps = React.ComponentProps<"div"> & {
   /** Which ambient field the panel sits on. */
   tone?: "light" | "dark";
-  /** Adds hover lift + border glow — for clickable cards. */
+  /** Adds hover lift + border glow, for clickable cards. */
   interactive?: boolean;
   /** Skip the specular sheen line along the top edge. */
   noSheen?: boolean;

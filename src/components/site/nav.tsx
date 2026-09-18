@@ -26,7 +26,7 @@ const NAV_LINKS = [
 /**
  * A floating glass pill rather than a full-width bar: fixed, inset from
  * every edge, rounded-full, backdrop-blur. It thickens its border and
- * shadow slightly once the page scrolls, but never becomes a solid strip —
+ * shadow slightly once the page scrolls, but never becomes a solid strip;
  * that would break the "glass hovering over the page" read the rest of the
  * site is built on.
  */

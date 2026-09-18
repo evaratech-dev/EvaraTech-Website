@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 
 /**
  * EvaraTank on an Indian rooftop overhead tank: ultrasonic pulses leave the
- * sensor, bounce off the water surface, and return — the sensor never
+ * sensor, bounce off the water surface, and return. The sensor never
  * contacts the water. Water level drifts to show live measurement.
  */
 export function TankEcho() {
@@ -40,7 +40,7 @@ export function TankEcho() {
         <line key={y} x1="90" y1={y} x2="330" y2={y} stroke="#eef2f8" strokeWidth="6" />
       ))}
 
-      {/* Water inside — level breathes */}
+      {/* Water inside: level breathes */}
       <clipPath id="tankClip">
         <path d="M96 118 h228 a10 10 0 0 1 10 10 v186 a18 18 0 0 1 -18 18 h-212 a18 18 0 0 1 -18 -18 v-186 a10 10 0 0 1 10 -10 z" />
       </clipPath>

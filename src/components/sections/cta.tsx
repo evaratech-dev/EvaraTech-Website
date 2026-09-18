@@ -30,7 +30,7 @@ export function Cta() {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-muted-foreground">
               Talk to the team building the operating system for water
-              infrastructure — from a single tank to an entire smart city.
+              infrastructure, from a single tank to an entire smart city.
             </p>
           </div>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

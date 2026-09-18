@@ -7,7 +7,7 @@ type SectionProps = React.ComponentProps<"section"> & {
 
 /**
  * All light tones are transparent (or near it) so the fixed AmbientBackground
- * shows through continuously from the hero to the footer — one atmosphere
+ * shows through continuously from the hero to the footer: one atmosphere
  * for every glass panel to refract, rather than alternating solid section
  * backgrounds. Only "dark" stays opaque, as the deliberate bookend.
  */

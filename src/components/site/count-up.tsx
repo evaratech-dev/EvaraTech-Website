@@ -5,7 +5,7 @@ import { animate, useInView, useReducedMotion } from "framer-motion";
 
 /**
  * Number that tweens from zero to `value` using framer-motion's `animate()`
- * with an onUpdate writing straight to the DOM node — no React re-renders per
+ * with an onUpdate writing straight to the DOM node, no React re-renders per
  * frame. Fires either the first time it scrolls into view, or shortly after
  * mount for above-the-fold hero figures. Under reduced motion it prints the
  * final value at once.

@@ -12,14 +12,14 @@ export const SITE_URL = (
 export const SITE_NAME = "EvaraTech";
 
 /**
- * The company tagline, not a description of the product — this is the line
+ * The company tagline, not a description of the product. This is the line
  * that shows as the headline wherever the site is shared (WhatsApp, Slack,
  * LinkedIn, Google), so it has to read as the brand.
  */
-export const SITE_TITLE = "EvaraTech — Your Universe of Sustainable Solutions";
+export const SITE_TITLE = "EvaraTech - Your Universe of Sustainable Solutions";
 
 export const SITE_DESCRIPTION =
-  "Smart IoT devices and an AI-powered platform for real-time water intelligence — retrofit onto the tanks, borewells, meters and pumps you already have, with no pipe cutting and no civil work.";
+  "Smart IoT devices and an AI-powered platform for real-time water intelligence, retrofit onto the tanks, borewells, meters and pumps you already have, with no pipe cutting and no civil work.";
 
 /** Absolute URL helper for a site-relative path. */
 export function absoluteUrl(path = "/"): string {

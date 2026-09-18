@@ -19,11 +19,11 @@ import { CountUp } from "@/components/site/count-up";
  * footage reaches the very top of the page, and lays a left-weighted scrim so
  * white copy stays legible over the moving image.
  *
- * Under reduced motion the video is replaced by its poster frame — the same
- * scene, held still. Every stat figure is one EvaraTech publishes.
+ * Under reduced motion the video is replaced by its poster frame, the same
+ * scene held still. Every stat figure is one EvaraTech publishes.
  */
 
-// Framed as impact rather than inventory — the same published figures, said
+// Framed as impact rather than inventory: the same published figures, said
 // the way the company measures itself.
 const STATS = [
   { icon: Droplets, value: 2.5, decimals: 1, suffix: "M+", label: "Litres of water protected" },
@@ -72,7 +72,7 @@ export function ProblemHero() {
         </video>
       )}
 
-      {/* Scrims — strongest at left and bottom, so the devices on the right of
+      {/* Scrims, strongest at left and bottom, so the devices on the right of
           the frame keep showing through. */}
       <div
         aria-hidden="true"
@@ -99,26 +99,25 @@ export function ProblemHero() {
       />
       <div aria-hidden="true" className="hero-grain pointer-events-none absolute inset-0" />
 
-      {/* Copy — vertically centred in the space above the stat bar */}
+      {/* Copy, vertically centred in the space above the stat bar */}
       <Container className="relative z-10 flex flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
         <div className="max-w-2xl">
           <MaskReveal>
-            <p className="font-mono text-[11px] tracking-[0.24em] text-evara-teal-300 uppercase">
-              AI · IoT · Water intelligence
+            <p className="font-mono text-[11px] tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
+              AI · IoT · Climate tech
             </p>
           </MaskReveal>
 
-          <h1 className="mt-5 font-heading text-[2.5rem] leading-[1.03] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.5rem]">
-            <MaskReveal delay={0.05}>Your universe of</MaskReveal>
-            <MaskReveal delay={0.12}>sustainable</MaskReveal>
+          <h1 className="mt-5 font-heading text-[2.6rem] leading-[1.02] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] 2xl:text-[5.2rem]">
+            <MaskReveal delay={0.05}>Every litre measured.</MaskReveal>
             <span className="block overflow-hidden">
               <motion.span
                 initial={reduced ? { opacity: 0 } : { y: "110%" }}
                 animate={reduced ? { opacity: 1 } : { y: 0 }}
-                transition={{ duration: 0.9, delay: 0.19, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.9, delay: 0.14, ease: [0.16, 1, 0.3, 1] }}
                 className="block"
               >
-                <span className="text-evara-teal-300">solutions.</span>
+                Every <span className="text-evara-teal-300">rupee saved.</span>
               </motion.span>
             </span>
           </h1>
@@ -127,11 +126,11 @@ export function ProblemHero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-6 max-w-md text-base leading-relaxed text-white/70 sm:text-lg"
+            className="mt-6 max-w-lg text-base leading-relaxed text-white/70 sm:text-lg 2xl:text-xl"
           >
-            We make the water infrastructure you already own intelligent —
-            borewells, tanks, meters, pumps and valves — so every drop is
-            measured, predicted and protected.
+            Retrofit IoT and AI that turn the tanks, borewells, meters and
+            pumps you already own into a water network that pays for itself.
+            No pipe cutting, no civil work.
           </motion.p>
 
           <motion.div

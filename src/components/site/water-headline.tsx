@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  *
  * The type is the vessel: an unfilled ghost of the word sits underneath, and
  * a rising column of water is clipped to the letterforms on top. It is the
- * company's whole proposition — a level, measured precisely — stated in the
+ * company's whole proposition, a level measured precisely, stated in the
  * one element every visitor is guaranteed to look at.
  *
  * The level is a real number rendered beside it, not decoration.
@@ -24,7 +24,7 @@ export function WaterHeadline({
   /** 0–1 fill height. */
   level?: number;
   className?: string;
-  /** Which surface the type sits on — sets the unfilled vessel colour. */
+  /** Which surface the type sits on. Sets the unfilled vessel colour. */
   variant?: "light" | "dark";
 }) {
   const reduced = useReducedMotion();
@@ -42,7 +42,7 @@ export function WaterHeadline({
   // One gradient carries both states: water below the line, the unfilled
   // vessel above it. Two stops share a position so the waterline stays crisp
   // instead of fading. A single text node keeps selection and screen readers
-  // clean — no ghost copy, no duplicate for assistive tech.
+  // clean: no ghost copy, no duplicate for assistive tech.
   const pct = Math.round(fill * 100);
   const empty =
     variant === "dark" ? "rgba(255,255,255,0.16)" : "rgba(15,33,56,0.13)";

@@ -7,7 +7,7 @@ import { deployments } from "@/lib/evara-data";
 /**
  * Slow, continuous trust band of real deployments. Two copies of the list
  * scroll as one track so the loop is seamless; edge masks fade the ends into
- * the page. Under reduced motion it becomes a static, wrapped row — the names
+ * the page. Under reduced motion it becomes a static, wrapped row. The names
  * still read, nothing moves.
  *
  * These are genuine reference sites (a Presidential Residence among them), so

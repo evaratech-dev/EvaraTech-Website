@@ -31,7 +31,7 @@ export function MeterScan() {
       {/* Existing meter body */}
       <rect x="78" y="150" width="240" height="86" rx="12" fill="#ffffff" stroke="#cfd8e4" strokeWidth="2" />
       <text x="198" y="170" textAnchor="middle" className="fill-evara-slate-400 text-[9px] tracking-[0.14em] uppercase">
-        existing analog meter — unmodified
+        existing analog meter, unmodified
       </text>
 
       {dials.map((d) => (

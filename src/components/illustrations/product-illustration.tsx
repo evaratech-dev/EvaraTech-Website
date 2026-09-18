@@ -20,12 +20,12 @@ const REGISTRY: Record<
   evaratank: {
     Visual: TankEcho,
     caption:
-      "An ultrasonic pulse leaves the lid, reflects off the water surface and returns. The air gap is deliberate — nothing corrodes, nothing contaminates.",
+      "An ultrasonic pulse leaves the lid, reflects off the water surface and returns. The air gap is deliberate: nothing corrodes, nothing contaminates.",
   },
   evaradeep: {
     Visual: BorewellSection,
     caption:
-      "A motor lowers a floating bob until the string goes slack. A tension switch catches that instant and the encoder reports the payout — the depth. Only string and bob ever enter the well.",
+      "A motor lowers a floating bob until the string goes slack. A tension switch catches that instant and the encoder reports the payout, which is the depth. Only string and bob ever enter the well.",
   },
   evaraflow: {
     Visual: MeterScan,
@@ -35,7 +35,7 @@ const REGISTRY: Record<
   evaravalve: {
     Visual: ValveControl,
     caption:
-      "Flow is metered as it passes, and each zone can be opened, throttled or closed on a schedule — without anyone travelling to the site.",
+      "Flow is metered as it passes, and each zone can be opened, throttled or closed on a schedule without anyone travelling to the site.",
   },
   evaraphase: {
     Visual: PumpControl,

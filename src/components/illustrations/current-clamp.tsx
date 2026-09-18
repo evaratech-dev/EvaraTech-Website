@@ -47,7 +47,7 @@ export function CurrentClamp() {
           EvaraAMP
         </text>
         <text x="210" y="168" textAnchor="middle" className="fill-evara-teal text-[9px] font-medium">
-          clamps on — circuit never broken
+          clamps on, circuit never broken
         </text>
       </g>
 
@@ -108,7 +108,7 @@ export function CurrentClamp() {
           1,284 kWh
         </text>
         <text x="210" y="358" textAnchor="middle" className="fill-evara-teal-300 text-[9px]">
-          cumulative — billing & efficiency
+          cumulative, for billing & efficiency
         </text>
       </g>
 

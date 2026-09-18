@@ -15,7 +15,7 @@ export function NetworkField({ className }: { className?: string }) {
   const reduced = useReducedMotion();
 
   const { nodes, links } = useMemo(() => {
-    // Small deterministic PRNG — same output every render, every environment.
+    // Small deterministic PRNG: same output every render, every environment.
     let seed = 20251010;
     const rnd = () => {
       seed = (seed * 1664525 + 1013904223) % 4294967296;

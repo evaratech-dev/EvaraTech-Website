@@ -9,7 +9,7 @@ import { motion, useReducedMotion } from "framer-motion";
  * Deliberately opacity-only: the site leans on sticky scroll sequences (the
  * frame scrubber, the horizontal gallery) and position:fixed elements, all of
  * which break if an ancestor carries a `transform`. A translate/scale would
- * leave one behind at rest — a plain fade never does, so the transition is
+ * leave one behind at rest. A plain fade never does, so the transition is
  * free of side effects.
  *
  * Keyed by pathname so each navigation remounts and replays the entrance.

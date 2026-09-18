@@ -116,7 +116,7 @@ export function TippingBucket() {
       <g transform="translate(30, 300)">
         <rect x="-6" y="-12" width="372" height="76" rx="10" fill="#f7f9fc" stroke="#e4e9f0" />
         <text x="8" y="6" className="fill-evara-slate text-[9px] tracking-wide uppercase">
-          Intensity — last 12 h
+          Intensity, last 12 h
         </text>
         <motion.path
           d="M8 52 L38 46 L68 50 L98 30 L128 18 L158 26 L188 14 L218 34 L248 42 L278 30 L308 44 L348 50"

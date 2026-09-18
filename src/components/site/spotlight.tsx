@@ -9,7 +9,7 @@ import type { PointerEvent } from "react";
  * The card element itself receives {@link spotlightHandlers}, which write the
  * pointer position into CSS variables on that element. The {@link Spotlight}
  * layer is `pointer-events-none` and simply paints a radial gradient at those
- * coordinates. Mouse only — touch and keyboard get nothing to poke at.
+ * coordinates. Mouse only; touch and keyboard get nothing to poke at.
  *
  * Usage:
  *   <Link {...spotlightHandlers} className="group ...">

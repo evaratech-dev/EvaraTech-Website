@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { Container } from "@/components/site/section";
 import { ContactTrigger } from "@/components/contact/contact-dialog";
-import { company, products } from "@/lib/evara-data";
+import { company, listedProducts } from "@/lib/evara-data";
 
 type FooterLink = { label: string; href?: string; action?: "contact" };
 
 const FOOTER_COLUMNS: { heading: string; links: FooterLink[] }[] = [
   {
     heading: "Products",
-    links: products.slice(0, 4).map((p) => ({ label: p.name, href: "/#ecosystem" })),
+    links: listedProducts.slice(0, 4).map((p) => ({ label: p.name, href: `/products/${p.slug}` })),
   },
   {
     heading: "Platform",

@@ -16,7 +16,7 @@ import { SectionHeading } from "@/components/site/section-heading";
 import { ProductCard } from "@/components/site/product-card";
 import { Spotlight, spotlightHandlers } from "@/components/site/spotlight";
 import { staggerContainer, revealViewport } from "@/lib/motion";
-import { products, builtProductSlugs } from "@/lib/evara-data";
+import { listedProducts, listedCountWord, builtProductSlugs } from "@/lib/evara-data";
 
 /**
  * Lateral scroll gallery: vertical scroll drives horizontal travel through
@@ -48,7 +48,7 @@ export function HorizontalProducts() {
         <Container>
           <SectionHeading
             kicker="The product ecosystem"
-            title="Eight instruments. One nervous system for water."
+            title={`${listedCountWord} instruments. One nervous system for water.`}
             description="Each device solves one water-management pain point on its own. EvaraOne ties every reading, alert and control action together."
           />
           <motion.div
@@ -58,7 +58,7 @@ export function HorizontalProducts() {
             viewport={revealViewport}
             className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4"
           >
-            {products.map((p) => (
+            {listedProducts.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </motion.div>
@@ -77,13 +77,13 @@ export function HorizontalProducts() {
             <Container className="shrink-0 pb-10">
               <SectionHeading
                 kicker="The product ecosystem"
-                title="Eight instruments. One nervous system for water."
+                title={`${listedCountWord} instruments. One nervous system for water.`}
               />
             </Container>
 
             <motion.ul style={{ x }} className="flex gap-6 pl-12 xl:pl-16">
-              {products.map((p) => (
-                <li key={p.slug} className="w-[340px] shrink-0">
+              {listedProducts.map((p) => (
+                <li key={p.slug} className="w-[22rem] shrink-0 2xl:w-[24rem]">
                   <HorizontalCard product={p} />
                 </li>
               ))}
@@ -104,19 +104,19 @@ export function HorizontalProducts() {
   );
 }
 
-function HorizontalCard({ product }: { product: (typeof products)[number] }) {
+function HorizontalCard({ product }: { product: (typeof listedProducts)[number] }) {
   const isBuilt = builtProductSlugs.has(product.slug);
   const inner = (
     <>
       {isBuilt && <Spotlight />}
-      <div className="relative flex h-52 items-center justify-center overflow-hidden bg-white/20">
+      <div className="relative flex h-64 items-center justify-center overflow-hidden bg-white/20">
         {product.image ? (
           <Image
             src={product.image}
             alt={`${product.name} device`}
             fill
-            sizes="340px"
-            className="object-contain p-8 drop-shadow-[0_16px_20px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-105"
+            sizes="(min-width: 1536px) 384px, 352px"
+            className="object-contain p-5 drop-shadow-[0_16px_20px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <span className="text-xs tracking-widest text-evara-slate-400 uppercase">

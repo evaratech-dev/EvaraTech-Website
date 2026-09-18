@@ -114,9 +114,9 @@ export function ValveControl() {
           Schedule
         </text>
         {[
-          { y: 306, t: "06:00 — open", on: true },
-          { y: 326, t: "13:00 — throttle", on: true },
-          { y: 346, t: "22:00 — close", on: false },
+          { y: 306, t: "06:00 open", on: true },
+          { y: 326, t: "13:00 throttle", on: true },
+          { y: 346, t: "22:00 close", on: false },
         ].map((r) => (
           <g key={r.t}>
             <rect x="34" y={r.y - 9} width="22" height="12" rx="6" fill={r.on ? "#dcf5f2" : "#eef2f8"} />
