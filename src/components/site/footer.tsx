@@ -22,18 +22,20 @@ const FOOTER_COLUMNS: { heading: string; links: FooterLink[] }[] = [
   {
     heading: "Company",
     links: [
-      { label: "About Us", href: "/#proof" },
+      { label: "Vision & mission", href: "/#ideology" },
       { label: "Deployments", href: "/#proof" },
-      { label: "Why EvaraTech", href: "/#proof" },
+      { label: "Rashtrapati Nilayam", href: "/case-studies/rashtrapati-nilayam" },
+      { label: "Rudraram pilot", href: "/case-studies/sangareddy" },
+      { label: "Team", href: "/#team" },
       { label: "Contact", action: "contact" },
     ],
   },
   {
     heading: "Resources",
     links: [
-      { label: "How it works", href: "/#how-it-works" },
-      { label: "Specifications", href: "/#ecosystem" },
-      { label: "Patent & designs", href: "/#proof" },
+      { label: "Where the water goes", href: "/#causes" },
+      { label: "Inside EvaraOne", href: "/#platform" },
+      { label: "Patent & designs", href: "/#team" },
     ],
   },
 ];

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Section, Container } from "@/components/site/section";
 import { SectionHeading } from "@/components/site/section-heading";
 import { ProductIllustration } from "@/components/illustrations/product-illustration";
+import { DevicePanel } from "@/components/site/device-panel";
 import { Cta } from "@/components/sections/cta";
 import { ContactButton } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -289,25 +290,25 @@ export default async function ProductPage({
         </Section>
       )}
 
-      {/* Platform */}
-      <Section tone="lab">
+      {/* See it work: the device's own EvaraOne tile, running */}
+      <Section tone="lab" id="see-it-work">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:gap-12">
             <SectionHeading
-              align="center"
-              kicker="Connected to EvaraOne"
-              title="Every reading lands in one platform."
-              description="Live monitoring, alerts with voice output, AI forecasting and reporting across every device and every site, from a single building to an entire district."
+              kicker="See it work"
+              title="This is what EvaraOne shows for it."
+              description={`A live simulation of the ${product.name} tile in the platform. The reading ticks, the trace draws, and you can cause the fault it exists to catch.`}
             />
-            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-              <Button
-                asChild
-                variant="outline"
-                className="h-12 rounded-lg border-white/70 bg-white/50 px-6 text-sm font-medium text-evara-ink backdrop-blur-xl hover:bg-white/70"
-              >
-                <Link href="/#architecture">Explore EvaraOne</Link>
-              </Button>
-            </div>
+            <DevicePanel slug={product.slug} name={product.name} />
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Button
+              asChild
+              variant="outline"
+              className="h-12 rounded-lg border-white/70 bg-white/50 px-6 text-sm font-medium text-evara-ink backdrop-blur-xl hover:bg-white/70"
+            >
+              <Link href="/#architecture">Explore the whole platform</Link>
+            </Button>
           </div>
         </Container>
       </Section>

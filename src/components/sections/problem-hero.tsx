@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  useReducedMotion,
+} from "framer-motion";
 import { Activity, ArrowRight, Droplets, MapPin, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -19,8 +25,11 @@ import { CountUp } from "@/components/site/count-up";
  * footage reaches the very top of the page, and lays a left-weighted scrim so
  * white copy stays legible over the moving image.
  *
- * Under reduced motion the video is replaced by its poster frame, the same
- * scene held still. Every stat figure is one EvaraTech publishes.
+ * On a pointer device the footage drifts a few pixels against the cursor
+ * and the stat bar tilts toward it, so the first screen answers the hand.
+ * Pointer only: touch gets a still composition, and reduced motion gets the
+ * poster frame, the same scene held still. Every stat figure is one
+ * EvaraTech publishes.
  */
 
 // Framed as impact rather than inventory: the same published figures, said
@@ -36,6 +45,27 @@ export function ProblemHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
 
+  // Cursor position across the section, -1..1 on each axis, eased.
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 60, damping: 20, mass: 0.6 });
+  const sy = useSpring(my, { stiffness: 60, damping: 20, mass: 0.6 });
+  const footageX = useTransform(sx, [-1, 1], [12, -12]);
+  const footageY = useTransform(sy, [-1, 1], [8, -8]);
+  const barRotateY = useTransform(sx, [-1, 1], [-2.2, 2.2]);
+  const barRotateX = useTransform(sy, [-1, 1], [1.6, -1.6]);
+
+  const onPointerMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== "mouse" || reduced) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) * 2 - 1);
+    my.set(((e.clientY - r.top) / r.height) * 2 - 1);
+  };
+  const onPointerLeave = () => {
+    mx.set(0);
+    my.set(0);
+  };
+
   // Some browsers ignore the autoplay attribute until the element is muted in
   // JS as well; nudge it once mounted.
   useEffect(() => {
@@ -47,7 +77,11 @@ export function ProblemHero() {
   }, [reduced]);
 
   return (
-    <section className="dark relative -mt-20 flex min-h-[90svh] flex-col overflow-hidden bg-evara-navy-950 text-white sm:-mt-24">
+    <section
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+      className="dark relative -mt-20 flex min-h-[92svh] flex-col overflow-hidden bg-evara-navy-950 text-white sm:-mt-24"
+    >
       {/* Footage */}
       {reduced ? (
         // eslint-disable-next-line @next/next/no-img-element
@@ -57,19 +91,25 @@ export function ProblemHero() {
           className="absolute inset-0 h-full w-full object-cover"
         />
       ) : (
-        <video
-          ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover"
-          poster="/images/hero/hero-poster.webp"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
+        // Slightly oversized so the drift never exposes an edge.
+        <motion.div
+          style={{ x: footageX, y: footageY }}
+          className="absolute -inset-4"
           aria-hidden="true"
         >
-          <source src="/images/hero/hero.mp4" type="video/mp4" />
-        </video>
+          <video
+            ref={videoRef}
+            className="h-full w-full object-cover"
+            poster="/images/hero/hero-poster.webp"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src="/images/hero/hero.mp4" type="video/mp4" />
+          </video>
+        </motion.div>
       )}
 
       {/* Scrims, strongest at left and bottom, so the devices on the right of
@@ -163,11 +203,12 @@ export function ProblemHero() {
       </Container>
 
       {/* Dark-glass stat bar, seated in the frame */}
-      <Container className="relative z-10 pb-8 sm:pb-10">
+      <Container className="relative z-10 pb-8 sm:pb-10 [perspective:1400px]">
         <motion.dl
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.85, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          style={{ rotateX: barRotateX, rotateY: barRotateY, transformStyle: "preserve-3d" }}
           className="relative grid grid-cols-2 overflow-hidden rounded-2xl border border-white/15 bg-white/[0.07] shadow-[0_28px_70px_-30px_rgba(0,0,0,0.7)] backdrop-blur-2xl lg:grid-cols-4"
         >
           <div

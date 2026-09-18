@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { fadeUp } from "@/lib/motion";
 import { builtProductSlugs, type Product } from "@/lib/evara-data";
 import { Spotlight, spotlightHandlers } from "@/components/site/spotlight";
+import { Tilt } from "@/components/site/tilt";
 
 export function ProductCard({ product }: { product: Product }) {
   const isBuilt = builtProductSlugs.has(product.slug);
@@ -25,14 +26,16 @@ export function ProductCard({ product }: { product: Product }) {
   );
 
   return (
-    <motion.div variants={fadeUp}>
-      {isBuilt ? (
-        <Link href={`/products/${product.slug}`} className={className} {...spotlightHandlers}>
-          {inner}
-        </Link>
-      ) : (
-        <div className={className}>{inner}</div>
-      )}
+    <motion.div variants={fadeUp} className="h-full">
+      <Tilt>
+        {isBuilt ? (
+          <Link href={`/products/${product.slug}`} className={className} {...spotlightHandlers}>
+            {inner}
+          </Link>
+        ) : (
+          <div className={className}>{inner}</div>
+        )}
+      </Tilt>
     </motion.div>
   );
 }
@@ -60,7 +63,7 @@ function ProductCardInner({
               alt={`${product.name} device`}
               fill
               sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
-              className="object-contain p-5 drop-shadow-[0_14px_18px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-[1.04]"
+              className="tilt-lift object-contain p-5 drop-shadow-[0_14px_18px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-[1.04]"
             />
           ) : (
             <ProductBlueprint />

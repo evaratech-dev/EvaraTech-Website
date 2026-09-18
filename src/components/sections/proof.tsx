@@ -1,11 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin } from "lucide-react";
 import { Section, Container } from "@/components/site/section";
 import { SectionHeading } from "@/components/site/section-heading";
+import { DeploymentMap } from "@/components/site/deployment-map";
 import { fadeUp, staggerContainer, revealViewport } from "@/lib/motion";
-import { differentiators, deployments } from "@/lib/evara-data";
+import { differentiators } from "@/lib/evara-data";
 
 export function Proof() {
   return (
@@ -17,57 +17,35 @@ export function Proof() {
           description="Retrofit-first, patented, and already running in the field."
         />
 
-        <div className="mt-12 grid grid-cols-1 gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <motion.div
-            variants={staggerContainer(0.07)}
-            initial="hidden"
-            whileInView="show"
-            viewport={revealViewport}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-          >
-            {differentiators.map((d) => (
-              <motion.div
-                key={d.title}
-                variants={fadeUp}
-                className="rounded-xl border border-white/70 bg-white/45 p-5 backdrop-blur-xl transition-colors hover:bg-white/60"
-              >
-                <h3 className="font-heading text-base font-semibold text-evara-ink">
-                  {d.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-evara-slate">
-                  {d.detail}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+        <motion.div
+          variants={staggerContainer(0.07)}
+          initial="hidden"
+          whileInView="show"
+          viewport={revealViewport}
+          className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
+        >
+          {differentiators.map((d) => (
+            <motion.div
+              key={d.title}
+              variants={fadeUp}
+              className="rounded-xl border border-white/70 bg-white/45 p-5 backdrop-blur-xl transition-colors hover:bg-white/60"
+            >
+              <h3 className="font-heading text-base font-semibold text-evara-ink">{d.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-evara-slate">{d.detail}</p>
+            </motion.div>
+          ))}
+        </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="show"
-            viewport={revealViewport}
-            className="rounded-2xl border border-white/70 bg-white/40 p-6 backdrop-blur-xl sm:p-7"
-          >
-            <p className="text-xs font-semibold tracking-[0.16em] text-evara-water uppercase">
-              Deployed today
-            </p>
-            <ul className="mt-5 flex flex-col gap-5">
-              {deployments.map((d) => (
-                <li key={d.place} className="flex items-start gap-3">
-                  <MapPin
-                    className="mt-0.5 size-4 shrink-0 text-evara-water"
-                    strokeWidth={1.8}
-                  />
-                  <div>
-                    <p className="text-sm font-semibold text-evara-ink">
-                      {d.place}
-                    </p>
-                    <p className="mt-0.5 text-sm text-evara-slate">{d.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+        {/* Where it runs */}
+        <div className="mt-16 sm:mt-20">
+          <SectionHeading
+            kicker="Deployed today"
+            title="On the map, not on a slide."
+            description="Every pin is a site with EvaraTech hardware reporting from it. Hover a site to see what is installed; two of them have the full story."
+          />
+          <div className="mt-10">
+            <DeploymentMap />
+          </div>
         </div>
       </Container>
     </Section>

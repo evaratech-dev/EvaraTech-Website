@@ -15,6 +15,7 @@ import { Container } from "@/components/site/section";
 import { SectionHeading } from "@/components/site/section-heading";
 import { ProductCard } from "@/components/site/product-card";
 import { Spotlight, spotlightHandlers } from "@/components/site/spotlight";
+import { Tilt } from "@/components/site/tilt";
 import { staggerContainer, revealViewport } from "@/lib/motion";
 import { listedProducts, listedCountWord, builtProductSlugs } from "@/lib/evara-data";
 
@@ -116,7 +117,7 @@ function HorizontalCard({ product }: { product: (typeof listedProducts)[number] 
             alt={`${product.name} device`}
             fill
             sizes="(min-width: 1536px) 384px, 352px"
-            className="object-contain p-5 drop-shadow-[0_16px_20px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-105"
+            className="tilt-lift object-contain p-5 drop-shadow-[0_16px_20px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
           <span className="text-xs tracking-widest text-evara-slate-400 uppercase">
@@ -158,15 +159,19 @@ function HorizontalCard({ product }: { product: (typeof listedProducts)[number] 
   const className =
     "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/70 bg-white/50 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-evara-water-300 hover:bg-white/65 hover:shadow-[0_28px_56px_-28px_rgba(15,33,56,0.4)]";
 
-  return isBuilt ? (
-    <Link
-      href={`/products/${product.slug}`}
-      className={className}
-      {...spotlightHandlers}
-    >
-      {inner}
-    </Link>
-  ) : (
-    <div className={className}>{inner}</div>
+  return (
+    <Tilt>
+      {isBuilt ? (
+        <Link
+          href={`/products/${product.slug}`}
+          className={className}
+          {...spotlightHandlers}
+        >
+          {inner}
+        </Link>
+      ) : (
+        <div className={className}>{inner}</div>
+      )}
+    </Tilt>
   );
 }

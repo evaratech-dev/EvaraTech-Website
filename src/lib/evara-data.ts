@@ -138,12 +138,13 @@ export const team = [
 ];
 
 /** The road from a research bench to the field, in the order it happened. */
+/** The road from a research bench to the field, in the order it happened. */
 export const journey = [
   { year: "2022", title: "The patent", detail: "Indian Patent 202241055442 granted for IoT borewell and tank water-level tracking, assigned jointly with IIIT Hyderabad." },
   { year: "2023", title: "First devices in the field", detail: "EvaraFlow retrofits go live on real analog meters. Night-flow analysis finds its first silent leaks." },
-  { year: "2024", title: "Rashtrapati Nilayam", detail: "Borewell and tank monitoring deployed at the Presidential Residence, Hyderabad." },
-  { year: "2025", title: "EvaraTech Private Limited", detail: "Incorporated 10 October 2025. Sangareddy district brings 50+ monitoring nodes onto public infrastructure." },
-  { year: "Now", title: "EvaraOne", detail: "Eight instruments reporting into one platform, from a single tank to an entire district." },
+  { year: "2025", title: "Rashtrapati Nilayam", detail: "Stepwells, borewells and rainfall at the Presidential Residence monitored through a full year of seasons." },
+  { year: "Oct 2025", title: "EvaraTech Private Limited", detail: "Incorporated 10 October 2025 in Hyderabad." },
+  { year: "2026", title: "The TTDF pilot", detail: "5G NB-IoT smart water monitoring: nine nodes live across the IIIT Hyderabad campus, with the Rudraram village deployment next." },
 ];
 
 export const research = {
@@ -286,20 +287,62 @@ export const differentiators = [
   },
 ];
 
-export const deployments = [
-  {
-    place: "IIIT Hyderabad",
-    detail: "Bakul Boys Hostel. Tank monitoring and ML research testbed",
-  },
+export type Deployment = {
+  place: string;
+  city: string;
+  detail: string;
+  /** WGS84, for the map. */
+  lat: number;
+  lon: number;
+  /** What is installed there, in the site's own words. */
+  installed: string[];
+  /** Slug of a case study page, where one exists. */
+  caseStudy?: string;
+};
+
+export const deployments: Deployment[] = [
   {
     place: "Rashtrapati Nilayam",
-    detail: "Hyderabad. The Presidential Residence",
+    city: "Hyderabad",
+    detail: "The Presidential Residence. Stepwell, borewell and rainfall monitoring for campus water budgeting.",
+    lat: 17.53,
+    lon: 78.53,
+    installed: ["Water level sensors on 3 stepwells", "Current and level sensing on 5 borewells", "Rain gauge"],
+    caseStudy: "rashtrapati-nilayam",
   },
-  { place: "Lulu Mall", detail: "Hyderabad. Commercial deployment" },
-  { place: "Jakkur Lake", detail: "Bangalore. Open water-body monitoring" },
   {
-    place: "Sangareddy District",
-    detail: "Rudraram. 50+ water monitoring nodes on public infrastructure",
+    place: "IIIT Hyderabad",
+    city: "Hyderabad",
+    detail: "Bakul Boys Hostel and campus tanks. Tank monitoring, retrofit meters and the ML research testbed.",
+    lat: 17.445,
+    lon: 78.35,
+    installed: ["5 tank and sump level nodes", "4 EvaraFlow retrofits", "RO water quality monitoring"],
+    caseStudy: "sangareddy",
+  },
+  {
+    place: "Lulu Mall",
+    city: "Hyderabad",
+    detail: "Commercial deployment.",
+    lat: 17.46,
+    lon: 78.39,
+    installed: ["Water monitoring on a live commercial site"],
+  },
+  {
+    place: "Rudraram, Sangareddy",
+    city: "Sangareddy district",
+    detail: "Village water system under the TTDF 5G NB-IoT pilot. 62 borewells, 5 overhead tanks and 4 sumps surveyed for monitoring.",
+    lat: 17.6,
+    lon: 78.0,
+    installed: ["Site survey complete", "Flow metering on borewell outlets", "Tank and sump level monitoring"],
+    caseStudy: "sangareddy",
+  },
+  {
+    place: "Jakkur Lake",
+    city: "Bangalore",
+    detail: "Open water-body level monitoring.",
+    lat: 13.08,
+    lon: 77.6,
+    installed: ["Water level monitoring on an open lake"],
   },
 ];
 
@@ -515,7 +558,7 @@ export const products: Product[] = [
       { title: "Long battery life", detail: "Up to 14 days of backup." },
       { title: "Compact & durable", detail: "IP67 rated for real-world meter chambers." },
     ],
-    image: "/images/products/evaraflow.webp",
+    image: "/images/products/evaraflow-full.webp",
     price: "₹10K",
     hasSpecSheet: true,
     accent: "teal",
@@ -883,3 +926,114 @@ export const evaraOne = {
     "Role-scoped access so each user sees only their own scope",
   ],
 };
+
+/* --------------------------------------------------------------------------
+   Case studies. Every figure is taken from EvaraTech's own project decks:
+   the Rashtrapati Nilayam stepwell monitoring presentation and the TTDF
+   milestone reviews. Nothing here is estimated.
+   -------------------------------------------------------------------------- */
+export type CaseStudy = {
+  slug: string;
+  title: string;
+  place: string;
+  kicker: string;
+  summary: string;
+  status: "live" | "in progress";
+  hero: { label: string; value: string }[];
+  challenge: string[];
+  approach: string[];
+  findings: { title: string; detail: string }[];
+  outcome: string;
+  devices: string[];
+};
+
+export const caseStudies: CaseStudy[] = [
+  {
+    slug: "rashtrapati-nilayam",
+    title: "A year of water, measured at the Presidential Residence",
+    place: "Rashtrapati Nilayam, Hyderabad",
+    kicker: "Stepwell monitoring project",
+    summary:
+      "Three historic stepwells, five borewells and a rain gauge, read at high frequency through every season, turned a campus that was once a lakh litres a day short into one that can budget its own water.",
+    status: "live",
+    hero: [
+      { label: "Stepwells monitored", value: "3" },
+      { label: "Borewells instrumented", value: "5" },
+      { label: "Water drawn, one year", value: "26,455 kL" },
+      { label: "Water recovered, one year", value: "27,497 kL" },
+    ],
+    challenge: [
+      "In 2019 a CPWD report found the campus more than one lakh litres a day short of its needs, with visitor numbers and plantation growing.",
+      "Chinna Baavi, the smallest of the three stepwells, ran completely dry every summer.",
+      "Rainwater interventions were made, but nobody could say how much they had changed the water table, or which well to draw from on which day.",
+    ],
+    approach: [
+      "Water level sensors on the Jai Hind, Nakshatra and Chinna Baavi stepwells, reading continuously rather than once a week.",
+      "Current sensors on the pump motors and level sensing on five borewells, so every pumping cycle is matched to the drawdown it causes.",
+      "A rain gauge at Chinna Baavi, so recharge events can be tied to the rainfall that caused them.",
+    ],
+    findings: [
+      {
+        title: "Two wells share an aquifer",
+        detail: "Jai Hind and Nakshatra rise and fall together and give similar yields. Chinna Baavi does not, and yields poorly. That is now known, not guessed.",
+      },
+      {
+        title: "Consumption is highest in winter, not summer",
+        detail: "Seasonal totals across all three wells peak in winter and bottom out in the monsoon, which is the opposite of the assumption the campus was planning on.",
+      },
+      {
+        title: "Yield tests without a survey crew",
+        detail: "Recuperation tests, normally a specialist exercise, fall out of the data on any day the well returns to ground level after pumping.",
+      },
+      {
+        title: "Motor use, per well, per day",
+        detail: "Nakshatra runs 3.18 hours a day on average, Jai Hind 2.25, Chinna Baavi 0.87. Dry-run risk and over-pumping are visible before they cost a motor.",
+      },
+    ],
+    outcome:
+      "All three wells showed strong post-monsoon recovery, with Jai Hind and Nakshatra filling almost to the top. Across the year the wells recovered 1,042 kL more than was drawn from them. The campus now has a water budget built on measurement: inflows, outflows and change in storage, per well, per season.",
+    devices: ["EvaraDeep", "EvaraAMP", "EvaraRain"],
+  },
+  {
+    slug: "sangareddy",
+    title: "Bringing a village water system online",
+    place: "Rudraram, Sangareddy district",
+    kicker: "TTDF 5G NB-IoT pilot",
+    summary:
+      "A Department of Telecommunications pilot to prove cellular smart water monitoring for rural India, from the IIIT Hyderabad campus to a Mission Bhagiratha village where the entire water operation is still run by hand.",
+    status: "in progress",
+    hero: [
+      { label: "Borewells surveyed", value: "62" },
+      { label: "Storage units", value: "9" },
+      { label: "Campus nodes live", value: "9" },
+      { label: "Data points, one tank", value: "2.6 lakh" },
+    ],
+    challenge: [
+      "Rudraram draws its daily supply from Singur Dam under Mission Bhagiratha and falls back on 62 borewells when it runs short. Every motor is switched by hand.",
+      "There are no water meters. Nobody measures inflow, outflow or tank level, and overflow from one sump is diverted to another manually.",
+      "The village pays about three lakh rupees a month for power, and the 10 and 15 HP three-phase motors burn out roughly every three months from running continuously.",
+    ],
+    approach: [
+      "Phase one, at IIIT Hyderabad: 27 locations surveyed, five tank and sump level nodes and four EvaraFlow retrofits deployed, pushing live data into the ctOP middleware and dashboard.",
+      "Migration of the fleet to Jio NB-IoT SIMs and a BG95 cellular module designed and fabricated for the retrofit and borewell devices.",
+      "Phase two, at Rudraram: flow metering on all 62 borewell outlets and level monitoring on the five overhead tanks and four sumps, sized from the completed site survey.",
+    ],
+    findings: [
+      {
+        title: "Nine nodes, months of continuous data",
+        detail: "The KRB overhead tank alone has produced over 2.6 lakh readings. Fill and draw cycles for every monitored tank are now visible hour by hour.",
+      },
+      {
+        title: "Retrofit meters on live pipework",
+        detail: "Four EvaraFlow units on terrace and pump-house meters at Vindhya, Bodh, KRB and Pump House 2 are reading the dials nobody used to read.",
+      },
+      {
+        title: "Cellular, not Wi-Fi",
+        detail: "NB-IoT connectivity is being validated end to end, because a village pump house does not have a router.",
+      },
+    ],
+    outcome:
+      "The campus phase is live and the village survey is complete. The next milestone is the 20-node Rudraram deployment with dashboard integration, analytics and ten spare nodes, at which point a water system that has never been measured will report on itself for the first time.",
+    devices: ["EvaraTank", "EvaraFlow", "EvaraDeep"],
+  },
+];
