@@ -271,3 +271,16 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* Data flowing along the ecosystem links: a short dash pattern whose offset
+   marches toward the centre. Pure CSS, so it never depends on a JS loop. */
+.eco-flow {
+  animation: eco-flow 1.4s linear infinite;
+}
+@keyframes eco-flow {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .eco-flow { animation: none; }
+}
