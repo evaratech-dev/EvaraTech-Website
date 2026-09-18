@@ -325,7 +325,7 @@ export const deployments: Deployment[] = [
   },
   {
     place: "Rudraram, Sangareddy",
-    city: "Sangareddy district",
+    city: "Sangareddy",
     detail: "Village water system under the TTDF 5G NB-IoT pilot. 62 borewells, 5 overhead tanks and 4 sumps surveyed for monitoring.",
     lat: 17.6,
     lon: 78.0,
