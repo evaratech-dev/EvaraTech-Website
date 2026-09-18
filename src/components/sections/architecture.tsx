@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Bell, Eye, ShieldCheck } from "lucide-react";
 import { Section, Container } from "@/components/site/section";
-import { EcosystemScene } from "@/components/site/ecosystem-scene";
+import { FrameScrubber } from "@/components/site/frame-scrubber";
 import { MaskReveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 import { fadeUp, staggerContainer, revealViewport } from "@/lib/motion";
@@ -13,12 +13,11 @@ import { evaraOne, company } from "@/lib/evara-data";
 /**
  * EvaraOne, the platform section.
  *
- * A scroll-driven scene built from the real device renders carries the "one
- * platform" idea: the dashboard at the centre, every instrument arriving in
- * a ring around it, links drawing in, data flowing. A tight intro sets it
- * up. After it, the substance: what the platform computes per instrument
- * and who gets to see what, both taken from the EvaraOne software
- * requirements specification.
+ * The scroll-scrubbed film is itself the ecosystem visualization (dashboard at
+ * the centre, every device in a ring, live connections), so it carries the
+ * "one platform" idea on its own. A tight intro sets it up. After it, the
+ * substance: what the platform computes per instrument and who gets to see
+ * what, both taken from the EvaraOne software requirements specification.
  */
 export function Architecture() {
   return (
@@ -60,8 +59,20 @@ export function Architecture() {
         </Container>
       </Section>
 
-      {/* The ecosystem, filling the screen and driven by scroll */}
-      <EcosystemScene />
+      {/* The film, filling the screen. The plate keeps the labelled diagram
+          whole at its own 16:9; the ambient backdrop fills everything around
+          it with a blur of the same frame, so on a phone in portrait the space
+          above and below the plate is the film's own colour, never white. */}
+      <FrameScrubber
+        dir="/frames/evaraone"
+        count={120}
+        pinHeight="300vh"
+        pinHeightMobile="220vh"
+        plate
+        ambient
+        fit="contain"
+        tint={false}
+      />
 
       {/* What it knows */}
       <Section tone="paper" className="pt-12 sm:pt-16">

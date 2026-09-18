@@ -6,27 +6,36 @@ import { cn } from "@/lib/utils";
 /**
  * Mask reveal: the line rises out from behind a clipped edge rather than
  * fading in. Reads as typeset rather than animated.
+ *
+ * `trigger="mount"` plays as soon as the component mounts, for anything
+ * above the fold. The default waits for the element to scroll into view;
+ * never use that on hero copy, because a line that is clipped until its
+ * observer fires is a line that can stay clipped.
  */
 export function MaskReveal({
   children,
   delay = 0,
   className,
   as = "div",
+  trigger = "view",
 }: {
   children: React.ReactNode;
   delay?: number;
   className?: string;
   as?: "div" | "span" | "h1" | "h2" | "p";
+  trigger?: "view" | "mount";
 }) {
   const reduced = useReducedMotion();
   const Tag = motion[as];
+  const shown = reduced ? { opacity: 1 } : { y: 0 };
 
   return (
     <span className={cn("block overflow-hidden", className)}>
       <Tag
         initial={reduced ? { opacity: 0 } : { y: "110%" }}
-        whileInView={reduced ? { opacity: 1 } : { y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
+        {...(trigger === "mount"
+          ? { animate: shown }
+          : { whileInView: shown, viewport: { once: true, amount: 0.1 } })}
         transition={{
           duration: reduced ? 0.3 : 0.9,
           delay,

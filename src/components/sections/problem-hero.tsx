@@ -141,15 +141,15 @@ export function ProblemHero() {
 
       {/* Copy, vertically centred in the space above the stat bar */}
       <Container className="relative z-10 flex flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
-        <div className="max-w-2xl">
-          <MaskReveal>
+        <div className="max-w-3xl">
+          <MaskReveal trigger="mount">
             <p className="font-mono text-[11px] tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
               AI · IoT · Climate tech
             </p>
           </MaskReveal>
 
-          <h1 className="mt-5 font-heading text-[2.6rem] leading-[1.02] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.6rem] 2xl:text-[5.2rem]">
-            <MaskReveal delay={0.05}>Every litre measured.</MaskReveal>
+          <h1 className="mt-5 font-heading text-[2.4rem] leading-[1.04] font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.9rem] 2xl:text-[4.5rem]">
+            <MaskReveal trigger="mount" delay={0.05}>Every litre measured.</MaskReveal>
             <span className="block overflow-hidden">
               <motion.span
                 initial={reduced ? { opacity: 0 } : { y: "110%" }}
