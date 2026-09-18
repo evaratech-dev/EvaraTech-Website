@@ -296,8 +296,6 @@ export type Deployment = {
   lon: number;
   /** What is installed there, in the site's own words. */
   installed: string[];
-  /** Slug of a case study page, where one exists. */
-  caseStudy?: string;
 };
 
 export const deployments: Deployment[] = [
@@ -308,7 +306,6 @@ export const deployments: Deployment[] = [
     lat: 17.53,
     lon: 78.53,
     installed: ["Water level sensors on 3 stepwells", "Current and level sensing on 5 borewells", "Rain gauge"],
-    caseStudy: "rashtrapati-nilayam",
   },
   {
     place: "IIIT Hyderabad",
@@ -317,7 +314,6 @@ export const deployments: Deployment[] = [
     lat: 17.445,
     lon: 78.35,
     installed: ["5 tank and sump level nodes", "4 EvaraFlow retrofits", "RO water quality monitoring"],
-    caseStudy: "sangareddy",
   },
   {
     place: "Lulu Mall",
@@ -334,7 +330,6 @@ export const deployments: Deployment[] = [
     lat: 17.6,
     lon: 78.0,
     installed: ["Site survey complete", "Flow metering on borewell outlets", "Tank and sump level monitoring"],
-    caseStudy: "sangareddy",
   },
   {
     place: "Jakkur Lake",
@@ -926,114 +921,3 @@ export const evaraOne = {
     "Role-scoped access so each user sees only their own scope",
   ],
 };
-
-/* --------------------------------------------------------------------------
-   Case studies. Every figure is taken from EvaraTech's own project decks:
-   the Rashtrapati Nilayam stepwell monitoring presentation and the TTDF
-   milestone reviews. Nothing here is estimated.
-   -------------------------------------------------------------------------- */
-export type CaseStudy = {
-  slug: string;
-  title: string;
-  place: string;
-  kicker: string;
-  summary: string;
-  status: "live" | "in progress";
-  hero: { label: string; value: string }[];
-  challenge: string[];
-  approach: string[];
-  findings: { title: string; detail: string }[];
-  outcome: string;
-  devices: string[];
-};
-
-export const caseStudies: CaseStudy[] = [
-  {
-    slug: "rashtrapati-nilayam",
-    title: "A year of water, measured at the Presidential Residence",
-    place: "Rashtrapati Nilayam, Hyderabad",
-    kicker: "Stepwell monitoring project",
-    summary:
-      "Three historic stepwells, five borewells and a rain gauge, read at high frequency through every season, turned a campus that was once a lakh litres a day short into one that can budget its own water.",
-    status: "live",
-    hero: [
-      { label: "Stepwells monitored", value: "3" },
-      { label: "Borewells instrumented", value: "5" },
-      { label: "Water drawn, one year", value: "26,455 kL" },
-      { label: "Water recovered, one year", value: "27,497 kL" },
-    ],
-    challenge: [
-      "In 2019 a CPWD report found the campus more than one lakh litres a day short of its needs, with visitor numbers and plantation growing.",
-      "Chinna Baavi, the smallest of the three stepwells, ran completely dry every summer.",
-      "Rainwater interventions were made, but nobody could say how much they had changed the water table, or which well to draw from on which day.",
-    ],
-    approach: [
-      "Water level sensors on the Jai Hind, Nakshatra and Chinna Baavi stepwells, reading continuously rather than once a week.",
-      "Current sensors on the pump motors and level sensing on five borewells, so every pumping cycle is matched to the drawdown it causes.",
-      "A rain gauge at Chinna Baavi, so recharge events can be tied to the rainfall that caused them.",
-    ],
-    findings: [
-      {
-        title: "Two wells share an aquifer",
-        detail: "Jai Hind and Nakshatra rise and fall together and give similar yields. Chinna Baavi does not, and yields poorly. That is now known, not guessed.",
-      },
-      {
-        title: "Consumption is highest in winter, not summer",
-        detail: "Seasonal totals across all three wells peak in winter and bottom out in the monsoon, which is the opposite of the assumption the campus was planning on.",
-      },
-      {
-        title: "Yield tests without a survey crew",
-        detail: "Recuperation tests, normally a specialist exercise, fall out of the data on any day the well returns to ground level after pumping.",
-      },
-      {
-        title: "Motor use, per well, per day",
-        detail: "Nakshatra runs 3.18 hours a day on average, Jai Hind 2.25, Chinna Baavi 0.87. Dry-run risk and over-pumping are visible before they cost a motor.",
-      },
-    ],
-    outcome:
-      "All three wells showed strong post-monsoon recovery, with Jai Hind and Nakshatra filling almost to the top. Across the year the wells recovered 1,042 kL more than was drawn from them. The campus now has a water budget built on measurement: inflows, outflows and change in storage, per well, per season.",
-    devices: ["EvaraDeep", "EvaraAMP", "EvaraRain"],
-  },
-  {
-    slug: "sangareddy",
-    title: "Bringing a village water system online",
-    place: "Rudraram, Sangareddy district",
-    kicker: "TTDF 5G NB-IoT pilot",
-    summary:
-      "A Department of Telecommunications pilot to prove cellular smart water monitoring for rural India, from the IIIT Hyderabad campus to a Mission Bhagiratha village where the entire water operation is still run by hand.",
-    status: "in progress",
-    hero: [
-      { label: "Borewells surveyed", value: "62" },
-      { label: "Storage units", value: "9" },
-      { label: "Campus nodes live", value: "9" },
-      { label: "Data points, one tank", value: "2.6 lakh" },
-    ],
-    challenge: [
-      "Rudraram draws its daily supply from Singur Dam under Mission Bhagiratha and falls back on 62 borewells when it runs short. Every motor is switched by hand.",
-      "There are no water meters. Nobody measures inflow, outflow or tank level, and overflow from one sump is diverted to another manually.",
-      "The village pays about three lakh rupees a month for power, and the 10 and 15 HP three-phase motors burn out roughly every three months from running continuously.",
-    ],
-    approach: [
-      "Phase one, at IIIT Hyderabad: 27 locations surveyed, five tank and sump level nodes and four EvaraFlow retrofits deployed, pushing live data into the ctOP middleware and dashboard.",
-      "Migration of the fleet to Jio NB-IoT SIMs and a BG95 cellular module designed and fabricated for the retrofit and borewell devices.",
-      "Phase two, at Rudraram: flow metering on all 62 borewell outlets and level monitoring on the five overhead tanks and four sumps, sized from the completed site survey.",
-    ],
-    findings: [
-      {
-        title: "Nine nodes, months of continuous data",
-        detail: "The KRB overhead tank alone has produced over 2.6 lakh readings. Fill and draw cycles for every monitored tank are now visible hour by hour.",
-      },
-      {
-        title: "Retrofit meters on live pipework",
-        detail: "Four EvaraFlow units on terrace and pump-house meters at Vindhya, Bodh, KRB and Pump House 2 are reading the dials nobody used to read.",
-      },
-      {
-        title: "Cellular, not Wi-Fi",
-        detail: "NB-IoT connectivity is being validated end to end, because a village pump house does not have a router.",
-      },
-    ],
-    outcome:
-      "The campus phase is live and the village survey is complete. The next milestone is the 20-node Rudraram deployment with dashboard integration, analytics and ten spare nodes, at which point a water system that has never been measured will report on itself for the first time.",
-    devices: ["EvaraTank", "EvaraFlow", "EvaraDeep"],
-  },
-];

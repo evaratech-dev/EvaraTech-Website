@@ -40,8 +40,8 @@ export function Proof() {
         <div className="mt-16 sm:mt-20">
           <SectionHeading
             kicker="Deployed today"
-            title="On the map, not on a slide."
-            description="Every pin is a site with EvaraTech hardware reporting from it. Hover a site to see what is installed; two of them have the full story."
+            title="Running today, at these sites."
+            description="Every pin is a site with EvaraTech hardware reporting from it. Hover a site to see what is installed."
           />
           <div className="mt-10">
             <DeploymentMap />

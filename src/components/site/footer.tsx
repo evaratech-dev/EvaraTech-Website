@@ -24,8 +24,6 @@ const FOOTER_COLUMNS: { heading: string; links: FooterLink[] }[] = [
     links: [
       { label: "Vision & mission", href: "/#ideology" },
       { label: "Deployments", href: "/#proof" },
-      { label: "Rashtrapati Nilayam", href: "/case-studies/rashtrapati-nilayam" },
-      { label: "Rudraram pilot", href: "/case-studies/sangareddy" },
       { label: "Team", href: "/#team" },
       { label: "Contact", action: "contact" },
     ],

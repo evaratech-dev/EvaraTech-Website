@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Section, Container } from "@/components/site/section";
-import { MaskReveal, WordReveal } from "@/components/site/reveal";
 import { fadeUp, staggerContainer, revealViewport } from "@/lib/motion";
 import { company } from "@/lib/evara-data";
 
@@ -10,13 +9,15 @@ import { company } from "@/lib/evara-data";
  * What the company is for, stated before a single product is shown.
  *
  * Sits directly under the hero so a visitor reads intent before hardware.
- * The vision runs at display size as the one big typographic moment on the
- * light part of the page; mission and values follow as a numbered manifesto
- * rather than a card grid, because a manifesto is read and a grid is scanned.
+ * The vision is one confident statement, revealed as a whole: a per-word
+ * mask reveal here left the entire headline invisible whenever the observer
+ * did not fire, and at display size that was half a screen of blank page.
+ * Mission and values follow as a numbered manifesto rather than a card grid,
+ * because a manifesto is read and a grid is scanned.
  */
 export function Ideology() {
   return (
-    <Section tone="paper" id="ideology" className="overflow-hidden pt-8 sm:pt-10 lg:pt-12">
+    <Section tone="paper" id="ideology" className="overflow-hidden pt-8 sm:pt-10 lg:pt-12 pb-12 sm:pb-16 lg:pb-20">
       {/* One soft pool of light under the statement */}
       <div
         aria-hidden="true"
@@ -24,16 +25,28 @@ export function Ideology() {
       />
 
       <Container className="relative">
-        <div className="mx-auto max-w-5xl text-center">
-          <MaskReveal>
-            <p className="font-mono text-[11px] tracking-[0.24em] text-evara-water uppercase sm:text-xs">
-              Our vision
-            </p>
-          </MaskReveal>
-          <h2 className="mt-6 text-balance font-heading text-[2rem] leading-[1.1] font-semibold tracking-tight text-evara-ink sm:text-5xl lg:text-6xl 2xl:text-7xl">
-            <WordReveal text={company.vision} delay={0.05} />
-          </h2>
-        </div>
+        <motion.div
+          variants={staggerContainer(0.12)}
+          initial="hidden"
+          whileInView="show"
+          // Fires as soon as a sliver is on screen; no negative margin, so a
+          // tall block near the top of the page can never be skipped over.
+          viewport={{ once: true, amount: 0.05 }}
+          className="mx-auto max-w-4xl text-center"
+        >
+          <motion.p
+            variants={fadeUp}
+            className="font-mono text-[11px] tracking-[0.24em] text-evara-water uppercase sm:text-xs"
+          >
+            Our vision
+          </motion.p>
+          <motion.h2
+            variants={fadeUp}
+            className="mt-5 text-balance font-heading text-[1.85rem] leading-[1.12] font-semibold tracking-tight text-evara-ink sm:text-4xl lg:text-5xl 2xl:text-[3.4rem]"
+          >
+            {company.vision}
+          </motion.h2>
+        </motion.div>
 
         <motion.div
           variants={staggerContainer(0.1)}
