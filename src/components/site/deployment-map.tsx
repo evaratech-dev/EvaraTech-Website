@@ -83,6 +83,7 @@ export function DeploymentMap() {
                   <motion.circle
                     cx={x}
                     cy={y}
+                    r={8}
                     fill="none"
                     stroke="#1c75bc"
                     strokeWidth="1.2"
