@@ -8,9 +8,9 @@ import { fadeUp, staggerContainer, revealViewport } from "@/lib/motion";
 import { platformModules } from "@/lib/evara-data";
 
 /**
- * Inside EvaraOne: the seven modules, as a bento of small living instruments.
+ * Inside EvaraOne: the six modules, as a bento of small living instruments.
  *
- * A grid of text cards says "we have seven features". A grid where each card
+ * A grid of text cards says "we have six features". A grid where each card
  * shows its feature doing something says "this is what your screen looks like
  * at 6am when a tank is about to run dry". Every visual is SVG or CSS, loops
  * under Framer, and holds still under reduced motion.
@@ -35,9 +35,8 @@ export function Platform() {
         >
           <Tile module={platformModules[1]} span="lg:col-span-4" visual={<LiveMonitoring />} />
           <Tile module={platformModules[2]} span="lg:col-span-2" visual={<AlertEngine />} />
-          <Tile module={platformModules[0]} span="lg:col-span-2" visual={<DeviceGrid />} />
-          <Tile module={platformModules[3]} span="lg:col-span-2" visual={<Forecast />} />
-          <Tile module={platformModules[6]} span="lg:col-span-2" visual={<Voice />} />
+          <Tile module={platformModules[0]} span="lg:col-span-3" visual={<DeviceGrid />} />
+          <Tile module={platformModules[3]} span="lg:col-span-3" visual={<Forecast />} />
           <Tile module={platformModules[4]} span="lg:col-span-3" visual={<Sites />} />
           <Tile module={platformModules[5]} span="lg:col-span-3" visual={<Api />} />
         </motion.div>
@@ -272,33 +271,6 @@ function Forecast() {
         <text x="8" y="122" fontSize="10" fill="#8a97a8">measured</text>
         <text x="186" y="122" fontSize="10" fill="#00a99d">predicted</text>
       </svg>
-    </div>
-  );
-}
-
-/** Spoken alert, as a waveform. */
-function Voice() {
-  const reduced = useReducedMotion();
-  const bars = [10, 22, 34, 18, 42, 26, 38, 16, 30, 44, 20, 32, 14, 24, 36, 18];
-  return (
-    <div className="flex h-full flex-col justify-between p-5">
-      <p className="text-xs text-evara-slate">
-        <span className="font-medium text-evara-ink">Spoken alert</span> · Telugu, Hindi, English
-      </p>
-      <div className="flex h-16 items-center justify-center gap-1">
-        {bars.map((h, i) => (
-          <motion.span
-            key={i}
-            className="w-1.5 rounded-full bg-evara-water"
-            style={{ height: h }}
-            animate={reduced ? undefined : { scaleY: [1, 0.35, 1.15, 1] }}
-            transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.07, ease: "easeInOut" }}
-          />
-        ))}
-      </div>
-      <p className="rounded-xl bg-white/70 px-3 py-2 text-xs leading-snug text-evara-ink sm:text-sm">
-        &ldquo;Block C tank at twelve percent. Refill scheduled for six a.m.&rdquo;
-      </p>
     </div>
   );
 }

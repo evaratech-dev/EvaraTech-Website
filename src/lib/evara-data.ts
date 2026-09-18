@@ -348,7 +348,6 @@ export const platformModules = [
   { title: "AI/ML Analytics", detail: "Predictive maintenance, usage forecasting, leak prediction" },
   { title: "Multi-Site Management", detail: "Apartments, industries and entire smart cities" },
   { title: "API Integration", detail: "Third-party apps can pull data" },
-  { title: "Voice Alerts", detail: "Spoken alerts with multi-language support" },
 ];
 
 export const products: Product[] = [

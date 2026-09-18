@@ -42,9 +42,9 @@ export function Architecture() {
               className="mt-6 text-base leading-relaxed text-evara-slate sm:text-lg 2xl:text-xl"
             >
               Every tank, borewell, meter, pump and valve reports into one
-              AI-powered platform. Live monitoring, alerts with voice output,
-              usage forecasting and predictive maintenance, from a single
-              building to an entire district.
+              AI-powered platform. Live monitoring, alerts, usage forecasting
+              and predictive maintenance, from a single building to an entire
+              district.
             </motion.p>
             <motion.p
               variants={fadeUp}

@@ -16,11 +16,12 @@ import {
 import { Logo } from "@/components/site/logo";
 import { cn } from "@/lib/utils";
 
+// One link per major stretch of the homepage, in page order.
 const NAV_LINKS = [
   { href: "/#ecosystem", label: "Products" },
-  { href: "/#platform", label: "Platform" },
-  { href: "/#solutions", label: "Solutions" },
-  { href: "/#proof", label: "Company" },
+  { href: "/#architecture", label: "Platform" },
+  { href: "/#proof", label: "Deployments" },
+  { href: "/#team", label: "Company" },
 ];
 
 /**

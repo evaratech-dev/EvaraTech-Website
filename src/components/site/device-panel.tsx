@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Bell, RotateCcw, Volume2 } from "lucide-react";
+import { Bell, RotateCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -22,7 +22,6 @@ type Event = {
   /** Ticks the event lasts. */
   ticks: number;
   alert: string;
-  voice: string;
 };
 
 type Config = {
@@ -54,8 +53,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 20, when: "below", text: "Low level on Tank 4. Refill scheduled." },
     gauge: "tank",
     events: [
-      { label: "Start refill", ticks: 16, effect: (t) => t * 30, alert: "Refill cycle detected on Tank 4", voice: "Tank four filling. Estimated full in forty minutes." },
-      { label: "Simulate leak", ticks: 18, effect: (t) => -t * 50, alert: "Rapid depletion on Tank 4: probable leak", voice: "Warning. Tank four is losing water fast. Check for leakage." },
+      { label: "Start refill", ticks: 16, effect: (t) => t * 30, alert: "Refill cycle detected on Tank 4" },
+      { label: "Simulate leak", ticks: 18, effect: (t) => -t * 50, alert: "Rapid depletion on Tank 4: probable leak" },
     ],
   },
   evaradeep: {
@@ -70,8 +69,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 26, when: "above", text: "Drawdown past safe depth on B2. Pump cut." },
     gauge: "depth",
     events: [
-      { label: "Run pump", ticks: 20, effect: (t) => t * 9, alert: "Drawdown on B2 while pumping", voice: "Borewell B two. Water level dropping under pump load." },
-      { label: "Overnight recharge", ticks: 20, effect: (t) => -t * 4, alert: "Recharge detected on B2", voice: "Borewell B two recovering. Recharge two point four metres." },
+      { label: "Run pump", ticks: 20, effect: (t) => t * 9, alert: "Drawdown on B2 while pumping" },
+      { label: "Overnight recharge", ticks: 20, effect: (t) => -t * 4, alert: "Recharge detected on B2" },
     ],
   },
   evaraflow: {
@@ -85,8 +84,8 @@ const CONFIG: Record<string, Config> = {
     decimals: 1,
     gauge: "flow",
     events: [
-      { label: "Go to night mode", ticks: 22, effect: (t) => -4.2 + (t > 0.45 ? 1.8 : 0), alert: "Night-flow on Meter 117: 1.8 L/min with no demand. Probable leak", voice: "Meter one one seven shows flow at two a.m. Possible leak." },
-      { label: "Peak morning draw", ticks: 16, effect: (t) => Math.sin(t * Math.PI) * 18, alert: "Peak usage window on Meter 117", voice: "Tower A at peak demand. Eighteen litres a minute." },
+      { label: "Go to night mode", ticks: 22, effect: (t) => -4.2 + (t > 0.45 ? 1.8 : 0), alert: "Night-flow on Meter 117: 1.8 L/min with no demand. Probable leak" },
+      { label: "Peak morning draw", ticks: 16, effect: (t) => Math.sin(t * Math.PI) * 18, alert: "Peak usage window on Meter 117" },
     ],
   },
   evaravalve: {
@@ -100,8 +99,8 @@ const CONFIG: Record<string, Config> = {
     decimals: 0,
     gauge: "valve",
     events: [
-      { label: "Close valve", ticks: 10, effect: (t) => -22 * Math.min(1, t * 1.6), alert: "Zone 3 isolated. Valve closed in 6 s", voice: "Zone three valve closed. Supply isolated." },
-      { label: "Schedule: open at 06:00", ticks: 10, effect: (t) => -22 + 22 * Math.min(1, t * 1.6), alert: "Zone 3 valve opened on schedule", voice: "Zone three open. Morning supply started." },
+      { label: "Close valve", ticks: 10, effect: (t) => -22 * Math.min(1, t * 1.6), alert: "Zone 3 isolated. Valve closed in 6 s" },
+      { label: "Schedule: open at 06:00", ticks: 10, effect: (t) => -22 + 22 * Math.min(1, t * 1.6), alert: "Zone 3 valve opened on schedule" },
     ],
   },
   evaraamp: {
@@ -116,8 +115,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 24, when: "above", text: "Overload on P2. Motor stopped." },
     gauge: "phase",
     events: [
-      { label: "Dry run", ticks: 14, effect: (t) => -t * 9, alert: "Current collapsed on P2: dry run. Motor stopped", voice: "Pump P two running dry. Motor stopped to protect the winding." },
-      { label: "Drop phase L3", ticks: 14, effect: (t) => t * 12, alert: "Phase loss on L3: imbalance 38%. Motor stopped", voice: "Phase failure on pump P two. Motor stopped." },
+      { label: "Dry run", ticks: 14, effect: (t) => -t * 9, alert: "Current collapsed on P2: dry run. Motor stopped" },
+      { label: "Drop phase L3", ticks: 14, effect: (t) => t * 12, alert: "Phase loss on L3: imbalance 38%. Motor stopped" },
     ],
   },
   evaratds: {
@@ -132,8 +131,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 150, when: "above", text: "TDS above 150 ppm at the RO outlet." },
     gauge: "quality",
     events: [
-      { label: "Membrane fouling", ticks: 22, effect: (t) => t * 110, alert: "TDS rising at RO outlet: membrane service due", voice: "Water quality dropping at Bakul R O. Service the membrane." },
-      { label: "After service", ticks: 14, effect: (t) => -Math.min(1, t * 1.5) * 20, alert: "TDS back within range", voice: "R O outlet back to sixty five p p m." },
+      { label: "Membrane fouling", ticks: 22, effect: (t) => t * 110, alert: "TDS rising at RO outlet: membrane service due" },
+      { label: "After service", ticks: 14, effect: (t) => -Math.min(1, t * 1.5) * 20, alert: "TDS back within range" },
     ],
   },
   evararain: {
@@ -148,8 +147,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 30, when: "above", text: "Heavy rainfall. Flood early warning issued." },
     gauge: "rain",
     events: [
-      { label: "Cloudburst", ticks: 20, effect: (t) => Math.sin(t * Math.PI) * 44, alert: "Heavy rainfall: 42 mm/h. Early warning sent", voice: "Heavy rain. Forty two millimetres an hour. Check drains." },
-      { label: "Light drizzle", ticks: 20, effect: (t) => Math.sin(t * Math.PI) * 3, alert: "Rain event logged: 3 mm/h", voice: "Light rain on the rooftop gauge." },
+      { label: "Cloudburst", ticks: 20, effect: (t) => Math.sin(t * Math.PI) * 44, alert: "Heavy rainfall: 42 mm/h. Early warning sent" },
+      { label: "Light drizzle", ticks: 20, effect: (t) => Math.sin(t * Math.PI) * 3, alert: "Rain event logged: 3 mm/h" },
     ],
   },
   evaraphase: {
@@ -164,8 +163,8 @@ const CONFIG: Record<string, Config> = {
     threshold: { at: 360, when: "below", text: "Under-voltage. Pump held off." },
     gauge: "phase",
     events: [
-      { label: "Phase failure", ticks: 14, effect: (t) => -Math.min(1, t * 2) * 140, alert: "Phase failure. Pump stopped before damage", voice: "Phase failure at the field pump. Pump stopped." },
-      { label: "Start from phone", ticks: 6, effect: () => 0, alert: "Pump started remotely", voice: "Pump started." },
+      { label: "Phase failure", ticks: 14, effect: (t) => -Math.min(1, t * 2) * 140, alert: "Phase failure. Pump stopped before damage" },
+      { label: "Start from phone", ticks: 6, effect: () => 0, alert: "Pump started remotely" },
     ],
   },
 };
@@ -176,7 +175,7 @@ export function DevicePanel({ slug, name }: { slug: string; name: string }) {
   const cfg = CONFIG[slug];
   const reduced = useReducedMotion();
   const [series, setSeries] = useState<number[]>(() => Array.from({ length: POINTS }, () => cfg?.base ?? 0));
-  const [alerts, setAlerts] = useState<{ id: number; text: string; voice: string }[]>([]);
+  const [alerts, setAlerts] = useState<{ id: number; text: string }[]>([]);
   const eventRef = useRef<{ ev: Event; tick: number } | null>(null);
   const lastAlertRef = useRef<string | null>(null);
   const idRef = useRef(0);
@@ -201,7 +200,7 @@ export function DevicePanel({ slug, name }: { slug: string; name: string }) {
           const hit = cfg.threshold.when === "above" ? next > cfg.threshold.at : next < cfg.threshold.at;
           if (hit && lastAlertRef.current !== cfg.threshold.text) {
             lastAlertRef.current = cfg.threshold.text;
-            push(cfg.threshold.text, cfg.threshold.text);
+            push(cfg.threshold.text);
           }
           if (!hit && lastAlertRef.current === cfg.threshold.text) lastAlertRef.current = null;
         }
@@ -213,15 +212,15 @@ export function DevicePanel({ slug, name }: { slug: string; name: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cfg, reduced]);
 
-  const push = (text: string, voice: string) => {
+  const push = (text: string) => {
     idRef.current += 1;
     const id = idRef.current;
-    setAlerts((a) => [{ id, text, voice }, ...a].slice(0, 3));
+    setAlerts((a) => [{ id, text }, ...a].slice(0, 3));
   };
 
   const fire = (ev: Event) => {
     eventRef.current = { ev, tick: 0 };
-    push(ev.alert, ev.voice);
+    push(ev.alert);
   };
 
   const reset = () => {
@@ -244,7 +243,6 @@ export function DevicePanel({ slug, name }: { slug: string; name: string }) {
 
   if (!cfg) return null;
   const value = series[series.length - 1];
-  const latest = alerts[0];
 
   return (
     <div className="overflow-hidden rounded-2xl border border-white/70 bg-white/55 backdrop-blur-xl">
@@ -341,12 +339,6 @@ export function DevicePanel({ slug, name }: { slug: string; name: string }) {
             ))}
           </AnimatePresence>
         </ul>
-        {latest && (
-          <p className="mt-3 flex items-start gap-2 text-sm text-evara-ink/80 italic">
-            <Volume2 className="mt-0.5 size-4 shrink-0 text-evara-water" />
-            &ldquo;{latest.voice}&rdquo;
-          </p>
-        )}
       </div>
     </div>
   );
