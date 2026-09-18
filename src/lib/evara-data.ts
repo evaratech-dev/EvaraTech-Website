@@ -180,6 +180,10 @@ export type Product = {
   /** Headline capabilities, as published on the product sheet. */
   features?: { title: string; detail: string }[];
   specs: { label: string; value: string }[];
+  /** The three numbers that sell it, for the product hero strip. */
+  highlights?: { label: string; value: string }[];
+  /** Photograph of the device in its environment, for the hero backdrop. */
+  scene?: string;
   image?: string;
   /** Additional real photography, including field installs. */
   gallery?: string[];
@@ -416,6 +420,8 @@ export const products: Product[] = [
       { title: "Rugged & reliable", detail: "IP65 waterproof design for rooftop exposure." },
     ],
     image: "/images/products/evaratank.webp",
+    highlights: [{ label: "Range", value: "0.3 to 5 m" }, { label: "Accuracy", value: "±1 cm" }, { label: "Battery backup", value: "30 days" }],
+    scene: "/images/scenes/evaratank.webp",
     hasSpecSheet: true,
     accent: "water",
   },
@@ -485,6 +491,7 @@ export const products: Product[] = [
       { title: "Rugged & reliable", detail: "IP65 waterproof design for harsh environments." },
     ],
     image: "/images/products/evaradeep.webp",
+    highlights: [{ label: "Depth range", value: "Up to 100 m" }, { label: "Accuracy", value: "±1 cm" }, { label: "Battery backup", value: "15 days" }],
     hasSpecSheet: true,
     accent: "navy",
   },
@@ -554,6 +561,8 @@ export const products: Product[] = [
     ],
     image: "/images/products/evaraflow-full.webp",
     price: "₹10K",
+    highlights: [{ label: "Camera", value: "8 MP" }, { label: "Digit recognition", value: "Up to 97%" }, { label: "Battery backup", value: "14 days" }],
+    scene: "/images/scenes/evaraflow.webp",
     hasSpecSheet: true,
     accent: "teal",
   },
@@ -618,6 +627,8 @@ export const products: Product[] = [
       { title: "Rugged & reliable", detail: "Corrosion-resistant body built for long life in tough environments." },
     ],
     image: "/images/products/evaravalve.webp",
+    highlights: [{ label: "Sizes", value: "DN15 to DN50" }, { label: "Open or close", value: "5 to 8 s" }, { label: "Protection", value: "IP67" }],
+    scene: "/images/scenes/evaravalve.webp",
     hasSpecSheet: true,
     accent: "water",
   },
@@ -668,6 +679,7 @@ export const products: Product[] = [
       { title: "Dry-run protection", detail: "Stops the pump when there is no water to draw." },
       { title: "Voltage monitoring", detail: "Watches every phase feeding the motor, continuously." },
     ],
+    highlights: [{ label: "Motors", value: "1, 2 and 3 phase" }, { label: "Protection", value: "Phase and dry run" }, { label: "Control", value: "From the app" }],
     hasSpecSheet: true,
     accent: "leaf",
   },
@@ -730,6 +742,8 @@ export const products: Product[] = [
       { title: "Built for plant rooms", detail: "Flame-retardant ABS body, rated for industrial panels." },
     ],
     image: "/images/products/evaraamp.webp",
+    highlights: [{ label: "Current", value: "0 to 400 A" }, { label: "Accuracy", value: "±1%" }, { label: "Data interval", value: "1 to 60 s" }],
+    scene: "/images/scenes/evaraamp.webp",
     hasSpecSheet: true,
     accent: "water",
   },
@@ -792,6 +806,8 @@ export const products: Product[] = [
       { title: "Anti-corrosion probe", detail: "Titanium alloy probe holds accuracy over the long term." },
     ],
     image: "/images/products/evaratds.webp",
+    highlights: [{ label: "TDS range", value: "0 to 2000 ppm" }, { label: "Accuracy", value: "±2% FS" }, { label: "Battery life", value: "30 days" }],
+    scene: "/images/scenes/evaratds.webp",
     hasSpecSheet: true,
     accent: "teal",
   },
@@ -854,6 +870,8 @@ export const products: Product[] = [
       { title: "Weatherproof", detail: "UV-resistant IP65 body built for permanent outdoor exposure." },
     ],
     image: "/images/products/evararain.webp",
+    highlights: [{ label: "Resolution", value: "0.2 mm per tip" }, { label: "Accuracy", value: "±2%" }, { label: "Battery life", value: "2 years" }],
+    scene: "/images/scenes/evararain.webp",
     hasSpecSheet: true,
     accent: "leaf",
   },

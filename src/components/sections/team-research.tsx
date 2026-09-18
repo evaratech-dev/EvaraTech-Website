@@ -23,9 +23,14 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 export function TeamResearch() {
   return (
-    <Section tone="mist" id="team">
-      <Container>
+    <Section tone="dark" id="team" className="relative overflow-hidden">
+      {/* The page closes as it opened: on dark. A little light in the corners
+          so the band reads as the hero's evening, not a blackout. */}
+      <div aria-hidden="true" className="pointer-events-none absolute top-[-20%] right-[-10%] size-[50vw] max-w-[820px] rounded-full bg-evara-water/[0.16] blur-[120px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute bottom-[-30%] left-[-10%] size-[46vw] max-w-[700px] rounded-full bg-evara-teal/[0.12] blur-[120px]" />
+      <Container className="relative">
         <SectionHeading
+          tone="inverted"
           kicker="Team & research"
           title={research.headline}
           description={research.detail}
@@ -47,14 +52,14 @@ export function TeamResearch() {
             <motion.div
               key={c.title}
               variants={fadeUp}
-              className="rounded-xl border border-white/70 bg-white/45 p-5 backdrop-blur-xl transition-colors hover:bg-white/60"
+              className="rounded-xl border border-white/10 bg-white/[0.06] p-5 backdrop-blur-xl transition-colors hover:bg-white/[0.1]"
             >
-              <span className="flex size-10 items-center justify-center rounded-lg bg-evara-water-100 text-evara-water">
+              <span className="flex size-10 items-center justify-center rounded-lg bg-white/10 text-evara-teal-300">
                 <c.icon className="size-[18px]" strokeWidth={1.7} />
               </span>
-              <h3 className="mt-4 text-sm font-semibold text-evara-ink sm:text-base">{c.title}</h3>
-              <p className="mt-1 text-sm font-medium text-evara-water">{c.detail}</p>
-              <p className="mt-1.5 text-xs leading-relaxed text-evara-slate sm:text-sm">{c.sub}</p>
+              <h3 className="mt-4 text-sm font-semibold text-white sm:text-base">{c.title}</h3>
+              <p className="mt-1 text-sm font-medium text-evara-water-300">{c.detail}</p>
+              <p className="mt-1.5 text-xs leading-relaxed text-white/60 sm:text-sm">{c.sub}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -72,14 +77,14 @@ export function TeamResearch() {
         >
           <div className="flex items-end justify-between gap-6">
             <div>
-              <p className="font-mono text-[11px] tracking-[0.22em] text-evara-water uppercase sm:text-xs">
+              <p className="font-mono text-[11px] tracking-[0.22em] text-evara-teal-300 uppercase sm:text-xs">
                 Core team
               </p>
-              <h3 className="mt-3 font-heading text-[1.75rem] leading-[1.15] font-semibold tracking-tight text-evara-ink sm:text-4xl">
+              <h3 className="mt-3 font-heading text-[1.75rem] leading-[1.15] font-semibold tracking-tight text-white sm:text-4xl">
                 Four people. One obsession.
               </h3>
             </div>
-            <p className="hidden max-w-xs text-sm text-evara-slate sm:block">
+            <p className="hidden max-w-xs text-sm text-white/55 sm:block">
               Open a card to see what each of us actually works on.
             </p>
           </div>
@@ -105,8 +110,8 @@ function PersonCard({ person }: { person: (typeof team)[number] }) {
       className={cn(
         "group relative flex flex-col overflow-hidden rounded-2xl border backdrop-blur-xl transition-colors",
         open
-          ? "border-evara-navy-700/30 bg-evara-ink text-white"
-          : "border-white/70 bg-white/45 text-evara-ink hover:bg-white/65"
+          ? "border-white bg-white text-evara-ink"
+          : "border-white/10 bg-white/[0.06] text-white hover:bg-white/[0.1]"
       )}
     >
       <button
@@ -120,7 +125,7 @@ function PersonCard({ person }: { person: (typeof team)[number] }) {
             aria-hidden="true"
             className={cn(
               "flex size-12 items-center justify-center rounded-full font-heading text-sm font-semibold transition-colors",
-              open ? "bg-white/15 text-white" : "bg-evara-ink text-white"
+              open ? "bg-evara-ink text-white" : "bg-white/15 text-white"
             )}
           >
             {initials(person.name)}
@@ -130,17 +135,17 @@ function PersonCard({ person }: { person: (typeof team)[number] }) {
             transition={{ duration: 0.3, ease: EASE }}
             className={cn(
               "flex size-8 items-center justify-center rounded-full border transition-colors",
-              open ? "border-white/25 text-white" : "border-evara-line text-evara-slate group-hover:border-evara-water group-hover:text-evara-water"
+              open ? "border-evara-line text-evara-slate" : "border-white/25 text-white/70 group-hover:border-evara-teal-300 group-hover:text-evara-teal-300"
             )}
           >
             <Plus className="size-4" strokeWidth={2} />
           </motion.span>
         </div>
         <h4 className="mt-5 font-heading text-base font-semibold sm:text-lg">{person.name}</h4>
-        <p className={cn("mt-0.5 text-sm font-medium", open ? "text-evara-teal-300" : "text-evara-water")}>
+        <p className={cn("mt-0.5 text-sm font-medium", open ? "text-evara-water" : "text-evara-teal-300")}>
           {person.role}
         </p>
-        <p className={cn("mt-3 text-sm leading-relaxed", open ? "text-white/70" : "text-evara-slate")}>
+        <p className={cn("mt-3 text-sm leading-relaxed", open ? "text-evara-slate" : "text-white/65")}>
           {person.bio}
         </p>
 
@@ -156,12 +161,12 @@ function PersonCard({ person }: { person: (typeof team)[number] }) {
             >
               <ul className="mt-5 flex flex-wrap gap-1.5">
                 {person.focus.map((f) => (
-                  <li key={f} className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-xs text-white/90">
+                  <li key={f} className="rounded-full border border-evara-line bg-evara-mist px-2.5 py-1 text-xs text-evara-ink">
                     {f}
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 border-l-2 border-evara-teal pl-3 text-sm leading-relaxed text-white/85 italic">
+              <p className="mt-5 border-l-2 border-evara-teal pl-3 text-sm leading-relaxed text-evara-ink/80 italic">
                 {person.quote}
               </p>
             </motion.div>
@@ -177,18 +182,18 @@ function Journey() {
   const reduced = useReducedMotion();
   return (
     <div className="mt-16 sm:mt-20">
-      <p className="font-mono text-[11px] tracking-[0.22em] text-evara-water uppercase sm:text-xs">
+      <p className="font-mono text-[11px] tracking-[0.22em] text-evara-teal-300 uppercase sm:text-xs">
         The road here
       </p>
       <div className="relative mt-8">
         {/* Rail */}
-        <div className="absolute top-2 bottom-2 left-[7px] w-px bg-evara-line lg:top-[7px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto" />
+        <div className="absolute top-2 bottom-2 left-[7px] w-px bg-white/15 lg:top-[7px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto" />
         <motion.div
           initial={reduced ? { scaleY: 1, scaleX: 1 } : { scaleY: 0, scaleX: 0 }}
           whileInView={{ scaleY: 1, scaleX: 1 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 2, ease: EASE }}
-          className="absolute top-2 bottom-2 left-[7px] w-px origin-top bg-evara-water lg:top-[7px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto lg:origin-left"
+          className="absolute top-2 bottom-2 left-[7px] w-px origin-top bg-evara-teal-300 lg:top-[7px] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto lg:origin-left"
         />
         <motion.ol
           variants={staggerContainer(0.18)}
@@ -199,12 +204,12 @@ function Journey() {
         >
           {journey.map((step) => (
             <motion.li key={step.title} variants={fadeUp} className="relative pl-8 lg:pt-8 lg:pl-0">
-              <span className="absolute top-1 left-0 flex size-[15px] items-center justify-center rounded-full border-2 border-evara-water bg-white lg:top-0 lg:left-0">
-                <span className="size-[5px] rounded-full bg-evara-water" />
+              <span className="absolute top-1 left-0 flex size-[15px] items-center justify-center rounded-full border-2 border-evara-teal-300 bg-evara-navy-950 lg:top-0 lg:left-0">
+                <span className="size-[5px] rounded-full bg-evara-teal-300" />
               </span>
-              <p className="font-mono text-xs text-evara-water tabular-nums">{step.year}</p>
-              <h4 className="mt-1.5 font-heading text-base font-semibold text-evara-ink sm:text-lg">{step.title}</h4>
-              <p className="mt-1.5 text-sm leading-relaxed text-evara-slate">{step.detail}</p>
+              <p className="font-mono text-xs text-evara-teal-300 tabular-nums">{step.year}</p>
+              <h4 className="mt-1.5 font-heading text-base font-semibold text-white sm:text-lg">{step.title}</h4>
+              <p className="mt-1.5 text-sm leading-relaxed text-white/60">{step.detail}</p>
             </motion.li>
           ))}
         </motion.ol>

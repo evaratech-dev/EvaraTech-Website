@@ -39,7 +39,8 @@ export function SiteNav() {
   // The homepage opens on a dark cinematic video, so the pill rides over it
   // as dark glass with white text, then flips to light glass the moment the
   // reader scrolls into the light sections below (or on any other page).
-  const overDark = pathname === "/" && !scrolled;
+  // Pages that open on a dark hero: the nav starts light-on-dark there.
+  const overDark = (pathname === "/" || pathname.startsWith("/products/")) && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -105,7 +106,7 @@ export function SiteNav() {
           <div className="hidden lg:block">
             <ContactButton
               className={cn(
-                "h-10 rounded-full px-5 text-sm font-medium transition-colors",
+                "demo-pulse h-10 rounded-full px-5 text-sm font-medium transition-colors",
                 overDark
                   ? "bg-evara-water text-white shadow-[0_10px_24px_-10px_rgba(28,117,188,0.8)] hover:bg-evara-water-400"
                   : "bg-evara-ink text-white shadow-[0_10px_24px_-12px_rgba(15,33,56,0.55)] hover:bg-evara-navy-700"

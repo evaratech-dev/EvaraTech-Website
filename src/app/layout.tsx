@@ -4,6 +4,7 @@ import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { ScrollProgress } from "@/components/site/scroll-progress";
 import { AmbientBackground } from "@/components/site/ambient-background";
+import { BrandIntro } from "@/components/site/brand-intro";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { RouteTransition } from "@/components/providers/route-transition";
 import { ContactDialogProvider } from "@/components/contact/contact-dialog";
@@ -148,6 +149,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Skip to content
         </a>
         <AmbientBackground />
+        <BrandIntro />
         <ContactDialogProvider>
           <SmoothScroll>
             <ScrollProgress />

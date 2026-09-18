@@ -25,5 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     ...productPages,
+    { url: `${SITE_URL}/privacy`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
+    { url: `${SITE_URL}/terms`, lastModified: now, changeFrequency: "yearly", priority: 0.2 },
   ];
 }

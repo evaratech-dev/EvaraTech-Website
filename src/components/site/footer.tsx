@@ -86,8 +86,10 @@ export function SiteFooter() {
             © {new Date().getFullYear()} {company.legalName}. All rights
             reserved.
           </p>
-          <p className="text-xs text-muted-foreground">
-            {company.hq} · {company.supportingLine}
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+            <span>{company.hq}</span>
+            <Link href="/privacy" className="hover:text-white">Privacy</Link>
+            <Link href="/terms" className="hover:text-white">Terms</Link>
           </p>
         </div>
       </Container>

@@ -271,3 +271,46 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* The one call to action that is always on screen breathes, slowly: a ring
+   that expands and fades every few seconds. Off under reduced motion. */
+.demo-pulse {
+  position: relative;
+}
+.demo-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 rgba(28, 117, 188, 0.55);
+  animation: demo-pulse 3.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  pointer-events: none;
+}
+@keyframes demo-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(28, 117, 188, 0.55); }
+  45%, 100% { box-shadow: 0 0 0 14px rgba(28, 117, 188, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .demo-pulse::after { animation: none; }
+}
+
+/* Legal pages: readable prose without pulling in a typography plugin. */
+.prose-evara h2 {
+  margin-top: 2.25rem;
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-evara-ink);
+}
+.prose-evara p {
+  margin-top: 0.85rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-evara-slate);
+}
+.prose-evara a {
+  color: var(--color-evara-water);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

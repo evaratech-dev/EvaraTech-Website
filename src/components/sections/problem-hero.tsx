@@ -107,6 +107,9 @@ export function ProblemHero() {
             playsInline
             preload="auto"
           >
+            {/* Phones get a 720px encode at under a third of the weight;
+                everything else the 1280px one. Same poster for both. */}
+            <source src="/images/hero/hero-720.mp4" type="video/mp4" media="(max-width: 640px)" />
             <source src="/images/hero/hero.mp4" type="video/mp4" />
           </video>
         </motion.div>
@@ -219,13 +222,13 @@ export function ProblemHero() {
             <div
               key={s.label}
               className={cn(
-                "flex items-center gap-3.5 px-5 py-5 sm:px-6",
+                "group/stat flex cursor-default items-center gap-3.5 px-5 py-5 transition-colors hover:bg-white/[0.06] sm:px-6",
                 i % 2 === 1 && "border-l border-white/12",
                 i % 4 !== 0 && "lg:border-l lg:border-white/12",
                 i >= 2 && "border-t border-white/12 lg:border-t-0"
               )}
             >
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-evara-teal-300">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/10 text-evara-teal-300 transition-transform duration-300 group-hover/stat:scale-110">
                 <s.icon className="size-[19px]" strokeWidth={1.9} />
               </span>
               <div>
@@ -236,6 +239,7 @@ export function ProblemHero() {
                     suffix={s.suffix}
                     start="mount"
                     delay={900 + i * 90}
+                    replayOnHover
                   />
                 </dd>
                 <dt className="mt-0.5 text-sm text-white/60">{s.label}</dt>

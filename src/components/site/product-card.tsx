@@ -88,6 +88,16 @@ function ProductCardInner({
           <p className="mt-4 flex-1 text-sm leading-relaxed text-evara-slate">
             {product.oneLine}
           </p>
+          {product.highlights && (
+            <ul className="grid max-h-0 grid-cols-3 gap-2 overflow-hidden opacity-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:mt-4 group-hover:max-h-24 group-hover:opacity-100">
+              {product.highlights.map((h) => (
+                <li key={h.label} className="rounded-lg bg-evara-water-100/70 px-2 py-1.5">
+                  <p className="font-heading text-xs font-semibold text-evara-ink">{h.value}</p>
+                  <p className="text-[10px] leading-tight text-evara-slate">{h.label}</p>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div
             className={cn(
