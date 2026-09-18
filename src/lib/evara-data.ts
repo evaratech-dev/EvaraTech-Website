@@ -448,10 +448,6 @@ export const products: Product[] = [
       { title: "Rugged & reliable", detail: "IP65 waterproof design for harsh environments." },
     ],
     image: "/images/products/evaradeep.webp",
-    gallery: [
-      "/images/deployments/borewell-install-1.jpg",
-      "/images/deployments/node-1.jpg",
-    ],
     hasSpecSheet: true,
     accent: "navy",
   },

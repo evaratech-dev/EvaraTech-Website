@@ -16,7 +16,7 @@ import { company } from "@/lib/evara-data";
  */
 export function Ideology() {
   return (
-    <Section tone="paper" id="ideology" className="overflow-hidden">
+    <Section tone="paper" id="ideology" className="overflow-hidden pt-8 sm:pt-10 lg:pt-12">
       {/* One soft pool of light under the statement */}
       <div
         aria-hidden="true"
@@ -40,7 +40,7 @@ export function Ideology() {
           initial="hidden"
           whileInView="show"
           viewport={revealViewport}
-          className="mt-16 grid grid-cols-1 gap-10 border-t border-evara-line pt-12 sm:mt-20 lg:grid-cols-[1fr_1.4fr] lg:gap-20 lg:pt-16"
+          className="mt-8 grid grid-cols-1 gap-8 border-t border-evara-line pt-8 sm:mt-10 lg:grid-cols-[1fr_1.4fr] lg:gap-20 lg:pt-10"
         >
           {/* Mission */}
           <motion.div variants={fadeUp}>
