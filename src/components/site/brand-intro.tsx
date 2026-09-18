@@ -18,16 +18,24 @@ import { WaterSurface, type DropEvent } from "@/components/site/water-surface";
  *   0.95s  the mark rises from the impact point, the wordmark unmasks letter
  *          by letter beside it
  *   1.45s  the tagline settles beneath
- *   0.60s  a water level fills along the base while a readout counts to 100
- *   2.90s  the curtain lifts, a waterline trailing its lower edge, and the
- *          hero is already playing underneath
+ *   0.60s  a water level fills along the base while a readout counts, slowly,
+ *          to 100. The readout is the clock: the moment it reaches 100 the
+ *          curtain lifts, a waterline trailing its lower edge, and the hero
+ *          is already playing underneath
  *
  * Plays once per browser session and never under reduced motion. The page
  * loads and renders normally behind it; nothing waits.
+ *
+ * The session flag is written when the intro *finishes*, not when it starts,
+ * and there is a hard fallback timer. Both matter: React runs effects twice
+ * in development, and a flag written at the start let the second run bail
+ * out and leave the curtain up with nothing scheduled to take it down.
  */
 const KEY = "evara-intro-seen";
 const EASE = [0.16, 1, 0.3, 1] as const;
-const HOLD_MS = 2900;
+const LEVEL_DELAY = 0.6;
+const LEVEL_DURATION = 2.6;
+const FALLBACK_MS = 6000;
 
 const DROPS: DropEvent[] = [
   { t: 0.35, x: 0.5, y: 0.5, r: 0.042, a: 1.7 },
@@ -41,19 +49,32 @@ export function BrandIntro() {
   const reduced = useReducedMotion();
   const [show, setShow] = useState(false);
   const startRef = useRef(0);
+  const doneRef = useRef(false);
+
+  const finish = () => {
+    if (doneRef.current) return;
+    doneRef.current = true;
+    try {
+      sessionStorage.setItem(KEY, "1");
+    } catch {
+      /* storage blocked */
+    }
+    setShow(false);
+  };
 
   useEffect(() => {
     if (reduced) return;
     try {
       if (sessionStorage.getItem(KEY)) return;
-      sessionStorage.setItem(KEY, "1");
     } catch {
-      /* storage blocked: still play once */
+      /* storage blocked: play it */
     }
-    startRef.current = performance.now();
+    if (!startRef.current) startRef.current = performance.now();
     setShow(true);
-    const t = setTimeout(() => setShow(false), HOLD_MS);
+    // If anything at all stops the level from completing, lift anyway.
+    const t = setTimeout(finish, FALLBACK_MS);
     return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reduced]);
 
   return (
@@ -112,7 +133,7 @@ export function BrandIntro() {
             </div>
           </div>
 
-          <Level />
+          <Level onComplete={finish} />
 
           {/* Waterline that trails the curtain's lower edge as it lifts */}
           <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-evara-water via-evara-teal-300 to-evara-water opacity-80" />
@@ -145,21 +166,24 @@ function Drop() {
   );
 }
 
-/** A water level filling along the base, with a readout that counts to 100. */
-function Level() {
+/** A water level filling along the base, with a readout that counts to 100.
+ *  Reaching 100 is what ends the intro. */
+function Level({ onComplete }: { onComplete: () => void }) {
   const ref = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     const c = animate(0, 100, {
-      duration: 1.7,
-      delay: 0.6,
-      ease: [0.16, 1, 0.3, 1],
+      duration: LEVEL_DURATION,
+      delay: LEVEL_DELAY,
+      ease: [0.3, 0, 0.2, 1],
       onUpdate: (n) => {
         el.textContent = String(Math.round(n)).padStart(3, "0");
       },
+      onComplete,
     });
     return () => c.stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -168,13 +192,13 @@ function Level() {
         <motion.span
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ duration: 1.7, delay: 0.6, ease: EASE }}
+          transition={{ duration: LEVEL_DURATION, delay: LEVEL_DELAY, ease: [0.3, 0, 0.2, 1] }}
           className="absolute inset-0 origin-left bg-gradient-to-r from-evara-water via-evara-water-400 to-evara-teal-300"
         />
         <motion.span
           initial={{ left: "0%", opacity: 0 }}
           animate={{ left: "100%", opacity: [0, 1, 1, 0] }}
-          transition={{ duration: 1.7, delay: 0.6, ease: EASE }}
+          transition={{ duration: LEVEL_DURATION, delay: LEVEL_DELAY, ease: [0.3, 0, 0.2, 1] }}
           className="absolute top-1/2 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-evara-teal-300 shadow-[0_0_12px_2px_rgba(138,223,215,0.7)]"
         />
       </div>
