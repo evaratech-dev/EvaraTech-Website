@@ -12,14 +12,19 @@ export const SITE_URL = (
 export const SITE_NAME = "EvaraTech";
 
 /**
- * The company tagline, not a description of the product. This is the line
- * that shows as the headline wherever the site is shared (WhatsApp, Slack,
- * LinkedIn, Google), so it has to read as the brand.
+ * Two homepage titles, on purpose.
+ *
+ * SITE_TITLE is the document title search engines index: the category first,
+ * the brand last, so someone searching for smart water management finds it.
+ * SHARE_TITLE is the company tagline, used for Open Graph and Twitter cards,
+ * so a link pasted into WhatsApp or LinkedIn reads as the brand.
  */
-export const SITE_TITLE = "EvaraTech - Your Universe of Sustainable Solutions";
+export const SITE_TITLE = "Smart Water Management IoT Solutions | EvaraTech";
+export const SHARE_TITLE = "EvaraTech - Your Universe of Sustainable Solutions";
 
+/** Under 160 characters: what the company makes, and where. */
 export const SITE_DESCRIPTION =
-  "Smart IoT devices and an AI-powered platform for real-time water intelligence, retrofit onto the tanks, borewells, meters and pumps you already have, with no pipe cutting and no civil work.";
+  "EvaraTech builds IoT devices and an AI platform that make existing water infrastructure smart: tank, borewell, meter, pump and valve monitoring from Hyderabad.";
 
 /** Absolute URL helper for a site-relative path. */
 export function absoluteUrl(path = "/"): string {

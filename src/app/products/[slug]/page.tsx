@@ -13,7 +13,9 @@ import { Cta } from "@/components/sections/cta";
 import { ContactButton } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
 import { absoluteUrl } from "@/lib/site";
-import { products, listedProducts, company, illustratedSlugs } from "@/lib/evara-data";
+import { HelpCircle } from "lucide-react";
+import { products, listedProducts, unlistedProductSlugs, illustratedSlugs } from "@/lib/evara-data";
+import { SITE_URL } from "@/lib/site";
 
 type Params = { slug: string };
 
@@ -30,27 +32,34 @@ export async function generateMetadata({
   const product = products.find((p) => p.slug === slug);
   if (!product) return { title: { absolute: "Product not found | EvaraTech" } };
 
-  // Bare title. The root layout's "%s | EvaraTech" template appends the brand.
-  const title = `${product.name}: ${product.tagline}`;
-  const description = product.oneLine;
+  // Absolute title: the product's own SEO title already carries the brand,
+  // so the layout's "%s | EvaraTech" template must not append it again.
+  const { title, description, keywords } = product.seo;
   const path = `/products/${product.slug}`;
+  const ogImage = `/images/og/${product.slug}.jpg`;
+  const unlisted = unlistedProductSlugs.has(product.slug);
 
   return {
-    title,
+    title: { absolute: title },
     description,
+    keywords,
     alternates: { canonical: path },
+    // Unlisted products (no render, not on any listing) stay reachable but
+    // out of the index until they launch: a thin, orphaned page indexed
+    // early is worse than no page.
+    robots: unlisted ? { index: false, follow: true } : { index: true, follow: true },
     openGraph: {
       type: "website",
       url: path,
-      title: `${title} | EvaraTech`,
+      title,
       description,
-      images: ["/images/og.jpg"],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: `${product.name}, ${product.seo.topic}` }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | EvaraTech`,
+      title,
       description,
-      images: ["/images/og.jpg"],
+      images: [ogImage],
     },
   };
 }
@@ -69,21 +78,74 @@ export default async function ProductPage({
   const index = listedProducts.findIndex((p) => p.slug === slug);
   const next = listedProducts[(index + 1) % listedProducts.length];
 
+  const url = absoluteUrl(`/products/${product.slug}`);
+  const related = product.seo.related
+    .map((slug) => listedProducts.find((p) => p.slug === slug))
+    .filter((p): p is (typeof listedProducts)[number] => Boolean(p));
+
+  // Structured data. Product carries no price, rating or availability: none
+  // is published, so none is claimed. Breadcrumbs mirror the visible trail;
+  // the FAQ mirrors the visible questions word for word.
   const productLd = {
     "@context": "https://schema.org",
     "@type": "Product",
+    "@id": `${url}#product`,
     name: product.name,
+    alternateName: `${product.name} ${product.seo.topic}`,
     category: product.category,
-    description: product.oneLine,
-    url: absoluteUrl(`/products/${product.slug}`),
+    description: product.seo.description,
+    url,
+    image: [absoluteUrl(`/images/og/${product.slug}.jpg`), ...(product.image ? [absoluteUrl(product.image)] : [])],
     brand: { "@type": "Brand", name: "EvaraTech" },
-    manufacturer: { "@type": "Organization", name: company.legalName },
-    ...(product.image ? { image: absoluteUrl(product.image) } : {}),
+    manufacturer: { "@id": `${SITE_URL}/#organization` },
+    keywords: product.seo.keywords.join(", "),
+    ...(product.highlights
+      ? {
+          additionalProperty: product.highlights.map((h) => ({
+            "@type": "PropertyValue",
+            name: h.label,
+            value: h.value,
+          })),
+        }
+      : {}),
+    isRelatedTo: related.map((r) => ({ "@type": "Product", name: r.name, url: absoluteUrl(`/products/${r.slug}`) })),
+  };
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "EvaraTech", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Products", item: `${SITE_URL}/#ecosystem` },
+      { "@type": "ListItem", position: 3, name: product.name, item: url },
+    ],
+  };
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: product.seo.faq.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  const webPageLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": url,
+    url,
+    name: product.seo.title,
+    description: product.seo.description,
+    isPartOf: { "@id": `${SITE_URL}/#website` },
+    about: { "@id": `${url}#product` },
+    inLanguage: "en",
   };
 
   return (
     <>
       <JsonLd data={productLd} />
+      <JsonLd data={breadcrumbLd} />
+      <JsonLd data={faqLd} />
+      <JsonLd data={webPageLd} />
 
       {/* Hero: a dark stage that mirrors the homepage hero. The device's own
           environment photograph sits behind it, blurred and dimmed so it
@@ -121,11 +183,16 @@ export default async function ProductPage({
 
           <div className="mt-8 grid grid-cols-1 items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
             <div className="order-2 lg:order-1">
-              <p className="font-mono text-[11px] tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
-                {product.category}
-              </p>
-              <h1 className="mt-4 font-heading text-[2.6rem] leading-[1.02] font-semibold tracking-tight text-white sm:text-6xl lg:text-[4.2rem]">
-                {product.name}
+              {/* The H1 states the subject, not just the brand: the small line
+                  above the name is part of the heading, so the page's topic is
+                  in its first heading for screen readers and search engines. */}
+              <h1 className="font-heading font-semibold tracking-tight text-white">
+                <span className="block font-mono text-[11px] font-medium tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
+                  {product.seo.topic}
+                </span>
+                <span className="mt-4 block text-[2.6rem] leading-[1.02] sm:text-6xl lg:text-[4.2rem]">
+                  {product.name}
+                </span>
               </h1>
               <p className="mt-3 font-heading text-lg font-medium text-white/80 sm:text-2xl">
                 {product.tagline}
@@ -160,7 +227,7 @@ export default async function ProductPage({
               {product.image ? (
                 <Image
                   src={product.image}
-                  alt={`${product.name} device`}
+                  alt={`${product.name} ${product.seo.topic} device`}
                   fill
                   priority
                   sizes="(min-width: 1024px) 440px, (min-width: 640px) 340px, 75vw"
@@ -345,6 +412,53 @@ export default async function ProductPage({
         </Container>
       </Section>
 
+      {/* Questions, answered from the page's own facts */}
+      <Section tone="paper" className="pt-0">
+        <Container>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+            <SectionHeading kicker="Questions" title={`About ${product.name}.`} />
+            <dl className="flex flex-col divide-y divide-evara-line border-y border-evara-line lg:pt-10 lg:border-t-0">
+              {product.seo.faq.map((f) => (
+                <div key={f.q} className="py-5">
+                  <dt className="flex items-start gap-3 font-heading text-base font-semibold text-evara-ink sm:text-lg">
+                    <HelpCircle className="mt-1 size-4 shrink-0 text-evara-water" strokeWidth={2} aria-hidden="true" />
+                    {f.q}
+                  </dt>
+                  <dd className="mt-2 pl-7 text-sm leading-relaxed text-evara-slate sm:text-base">{f.a}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </Container>
+      </Section>
+
+      {/* Related instruments, with anchors that say what they are */}
+      {related.length > 0 && (
+        <Section tone="mist">
+          <Container>
+            <SectionHeading kicker="Works with" title="Instruments deployed alongside it." />
+            <ul className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {related.map((r) => (
+                <li key={r.slug}>
+                  <Link
+                    href={`/products/${r.slug}`}
+                    className="group flex h-full flex-col rounded-2xl border border-white/70 bg-white/50 p-5 backdrop-blur-xl transition-colors hover:border-evara-water-300 hover:bg-white/75"
+                  >
+                    <span className="font-heading text-lg font-semibold text-evara-ink">{r.name}</span>
+                    <span className="mt-1 text-sm font-medium text-evara-water">{r.seo.topic}</span>
+                    <span className="mt-3 text-sm leading-relaxed text-evara-slate">{r.oneLine}</span>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-evara-ink">
+                      {r.name} details
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </Container>
+        </Section>
+      )}
+
       {/* Onward */}
       <Section tone="paper">
         <Container>
@@ -359,7 +473,7 @@ export default async function ProductPage({
               <p className="mt-2 font-heading text-xl font-semibold text-evara-ink sm:text-2xl">
                 {next.name}
               </p>
-              <p className="mt-1 text-sm text-evara-slate">{next.tagline}</p>
+              <p className="mt-1 text-sm text-evara-slate">{next.seo.topic}</p>
             </div>
             <ArrowRight className="size-6 shrink-0 text-evara-water transition-transform group-hover:translate-x-1" />
           </Link>

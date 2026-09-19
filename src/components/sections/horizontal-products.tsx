@@ -76,7 +76,10 @@ export function HorizontalProducts() {
         >
           <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
             <Container className="shrink-0 pb-10">
+              {/* Visual duplicate of the mobile grid's H2, which is the one
+                  the document keeps; two H2s for one topic is one too many. */}
               <SectionHeading
+                as="p"
                 kicker="The product ecosystem"
                 title={`${listedCountWord} instruments. One nervous system for water.`}
               />
@@ -114,7 +117,7 @@ function HorizontalCard({ product }: { product: (typeof listedProducts)[number] 
         {product.image ? (
           <Image
             src={product.image}
-            alt={`${product.name} device`}
+            alt={`${product.name}, ${product.seo.topic}`}
             fill
             sizes="(min-width: 1536px) 384px, 352px"
             className="tilt-lift object-contain p-5 drop-shadow-[0_16px_20px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-105"

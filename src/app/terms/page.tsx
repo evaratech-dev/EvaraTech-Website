@@ -6,6 +6,8 @@ export const metadata: Metadata = {
   title: "Terms of Use",
   description: "The terms on which EvaraTech makes this website available.",
   alternates: { canonical: "/terms" },
+  openGraph: { type: "website", url: "/terms", title: "Terms of Use | EvaraTech", description: "The terms on which EvaraTech makes this website available.", images: ["/images/og.jpg"] },
+  twitter: { card: "summary_large_image", title: "Terms of Use | EvaraTech", description: "The terms on which EvaraTech makes this website available.", images: ["/images/og.jpg"] },
 };
 
 export default function TermsPage() {

@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description:
     "How EvaraTech collects, uses and protects information on this website and in the EvaraOne platform.",
   alternates: { canonical: "/privacy" },
+  openGraph: { type: "website", url: "/privacy", title: "Privacy Policy | EvaraTech", description: "How EvaraTech collects, uses and protects information on this website and in the EvaraOne platform.", images: ["/images/og.jpg"] },
+  twitter: { card: "summary_large_image", title: "Privacy Policy | EvaraTech", description: "How EvaraTech collects, uses and protects information on this website and in the EvaraOne platform.", images: ["/images/og.jpg"] },
 };
 
 export default function PrivacyPage() {

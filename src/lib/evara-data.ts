@@ -182,6 +182,17 @@ export type Product = {
   specs: { label: string; value: string }[];
   /** The three numbers that sell it, for the product hero strip. */
   highlights?: { label: string; value: string }[];
+  /** Search-facing metadata. `topic` is the plain-language subject line that
+   *  sits inside the H1 beneath the product name; `related` are slugs of the
+   *  instruments this one is most often deployed with, for contextual links. */
+  seo: {
+    title: string;
+    description: string;
+    topic: string;
+    keywords: string[];
+    related: string[];
+    faq: { q: string; a: string }[];
+  };
   /** Photograph of the device in its environment, for the hero backdrop. */
   scene?: string;
   image?: string;
@@ -422,6 +433,19 @@ export const products: Product[] = [
     image: "/images/products/evaratank.webp",
     highlights: [{ label: "Range", value: "0.3 to 5 m" }, { label: "Accuracy", value: "±1 cm" }, { label: "Battery backup", value: "30 days" }],
     scene: "/images/scenes/evaratank.webp",
+    seo: {
+      title: "EvaraTank | IoT Overhead Tank Water Level Monitoring",
+      description:
+        "Ultrasonic IoT water level monitor for overhead tanks and sumps. Live level, overflow and dry-run alerts, leak detection, 30-day battery, no water contact.",
+      topic: "IoT overhead tank water level monitoring",
+      keywords: ["overhead tank water level monitoring", "ultrasonic tank level sensor", "IoT tank monitoring", "tank overflow alert", "smart water tank sensor"],
+      related: ["evaradeep", "evaravalve", "evaraflow"],
+      faq: [
+        { q: "How does EvaraTank measure the water level?", a: "It sits on top of the tank and times an ultrasonic pulse to the water surface and back. Nothing enters the water, so nothing corrodes or contaminates." },
+        { q: "How is EvaraTank installed?", a: "With a universal top mount on the tank. No pipe cutting, no civil work, and it fits overhead tanks, sumps and ground-level storage from 0.3 m to 5 m deep." },
+        { q: "How does it connect and how long does it run?", a: "4G, NB-IoT, WiFi, LoRaWAN or BLE, reporting every 2 minutes by default, with up to 30 days of battery backup through a blackout." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "water",
   },
@@ -492,6 +516,19 @@ export const products: Product[] = [
     ],
     image: "/images/products/evaradeep.webp",
     highlights: [{ label: "Depth range", value: "Up to 100 m" }, { label: "Accuracy", value: "±1 cm" }, { label: "Battery backup", value: "15 days" }],
+    seo: {
+      title: "EvaraDeep | IoT Borewell Water Level Monitoring System",
+      description:
+        "Patented IoT borewell water level monitor, accurate to 1 cm down to 100 m. Live groundwater level, recharge trends, dry-run alerts, no electronics in the well.",
+      topic: "IoT borewell and groundwater level monitoring",
+      keywords: ["borewell water level monitoring system", "IoT borewell monitoring", "groundwater level monitoring", "borewell level sensor", "dry-run protection"],
+      related: ["evaraamp", "evaratank", "evararain"],
+      faq: [
+        { q: "How does EvaraDeep measure depth without a submerged sensor?", a: "A motor lowers a floating bob on a string until it reaches the water; the string goes slack, a tension switch fires and an encoder reports the length paid out. Only the string and bob enter the well." },
+        { q: "How deep can it measure?", a: "Up to 100 m, to within 1 cm, on borewells, deep tanks and sumps." },
+        { q: "Where is it mounted and how does it report?", a: "It top-mounts on the borewell cap and reports over 4G, NB-IoT, WiFi or LoRaWAN every 2 minutes, with up to 15 days of battery backup." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "navy",
   },
@@ -563,6 +600,19 @@ export const products: Product[] = [
     price: "₹10K",
     highlights: [{ label: "Camera", value: "8 MP" }, { label: "Digit recognition", value: "Up to 97%" }, { label: "Battery backup", value: "14 days" }],
     scene: "/images/scenes/evaraflow.webp",
+    seo: {
+      title: "EvaraFlow | Smart Water Meter Retrofit with AI Reading",
+      description:
+        "Clip-on retrofit that reads any analog water meter with on-device AI at up to 97% accuracy. Automated meter reading, night-flow leak detection, no replacement.",
+      topic: "Smart retrofit for analog water meters with AI meter reading",
+      keywords: ["smart water meter retrofit", "automated meter reading", "AI water meter reading", "analog meter digitisation", "water leak detection IoT"],
+      related: ["evaravalve", "evaratank", "evaratds"],
+      faq: [
+        { q: "Does EvaraFlow replace the existing water meter?", a: "No. It clips over the face of the analog meter already installed. Nothing is cut, drilled or unplumbed." },
+        { q: "How does it read the meter?", a: "An 8 MP camera photographs the dial on a schedule and an on-device model reads the digits at up to 97% accuracy, entirely offline. Readings and images are stored locally if the network drops." },
+        { q: "How does it find leaks?", a: "Night-flow analysis compares consumption against hours when nothing should be drawing water. Continuous flow at 2 a.m. is flagged as a probable leak." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "teal",
   },
@@ -629,6 +679,19 @@ export const products: Product[] = [
     image: "/images/products/evaravalve.webp",
     highlights: [{ label: "Sizes", value: "DN15 to DN50" }, { label: "Open or close", value: "5 to 8 s" }, { label: "Protection", value: "IP67" }],
     scene: "/images/scenes/evaravalve.webp",
+    seo: {
+      title: "EvaraValve | IoT Smart Motorised Valve for Water Control",
+      description:
+        "IoT motorised ball valve, DN15 to DN50, on 4G, NB-IoT, WiFi or LoRaWAN. Open, close and schedule water supply remotely, isolate leaks in seconds. IP67.",
+      topic: "IoT smart motorised valve for remote water control",
+      keywords: ["smart motorised valve", "remote valve control IoT", "automated water distribution", "motorised ball valve IoT", "water supply scheduling"],
+      related: ["evaraflow", "evaratank", "evaraamp"],
+      faq: [
+        { q: "What sizes does EvaraValve come in?", a: "DN15 (half inch) to DN50 (2 inch), BSP or NPT threaded, in stainless steel 304 or brass with a PTFE seal, rated to PN16." },
+        { q: "What happens if power or network fails?", a: "A manual override lets the valve be operated locally, and it draws under 3 W on standby and under 10 W while moving." },
+        { q: "How fast does it operate?", a: "Fully open or closed in 5 to 8 seconds, in any mounting orientation." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "water",
   },
@@ -680,6 +743,18 @@ export const products: Product[] = [
       { title: "Voltage monitoring", detail: "Watches every phase feeding the motor, continuously." },
     ],
     highlights: [{ label: "Motors", value: "1, 2 and 3 phase" }, { label: "Protection", value: "Phase and dry run" }, { label: "Control", value: "From the app" }],
+    seo: {
+      title: "EvaraPhase | Remote Pump Starter with Phase Protection",
+      description:
+        "Smart pump starter controlled from a mobile app, with automatic shut-down on phase failure, voltage drop and dry run for single, two and three-phase motors.",
+      topic: "Remote pump control with phase and dry-run protection",
+      keywords: ["remote pump starter", "mobile pump control", "phase failure protection", "dry-run protection"],
+      related: ["evaraamp", "evaradeep"],
+      faq: [
+        { q: "Which motors does EvaraPhase work with?", a: "Single, two and three-phase pump motors, controlled from the mobile app over GSM or WiFi." },
+        { q: "What does it protect against?", a: "Phase failure, voltage anomalies, overload and dry run. The pump is cut automatically before the winding is damaged." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "leaf",
   },
@@ -744,6 +819,19 @@ export const products: Product[] = [
     image: "/images/products/evaraamp.webp",
     highlights: [{ label: "Current", value: "0 to 400 A" }, { label: "Accuracy", value: "±1%" }, { label: "Data interval", value: "1 to 60 s" }],
     scene: "/images/scenes/evaraamp.webp",
+    seo: {
+      title: "EvaraAMP | IoT Pump Motor Current and Energy Monitoring",
+      description:
+        "Clip-on IoT monitor for 3-phase pump motors: current, voltage, power and energy at 1% accuracy, with alerts for dry run, overload, phase loss and imbalance.",
+      topic: "IoT motor current and energy monitoring for pumps",
+      keywords: ["pump motor current monitoring", "3-phase motor protection", "pump energy monitoring IoT", "motor phase loss alert", "dry run detection"],
+      related: ["evaradeep", "evaravalve", "evaratank"],
+      faq: [
+        { q: "Does installing EvaraAMP interrupt the circuit?", a: "No. A split-core current transformer closes around the existing supply line, so the circuit is never broken." },
+        { q: "What does it measure?", a: "3-phase current, voltage, power, power factor and energy, from 0 to 400 A with an external CT, at 1% typical accuracy, every 1 to 60 seconds." },
+        { q: "What faults does it catch?", a: "Overload, underload, phase loss and imbalance, with alerts by app, SMS or email the moment a signature appears." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "water",
   },
@@ -808,6 +896,19 @@ export const products: Product[] = [
     image: "/images/products/evaratds.webp",
     highlights: [{ label: "TDS range", value: "0 to 2000 ppm" }, { label: "Accuracy", value: "±2% FS" }, { label: "Battery life", value: "30 days" }],
     scene: "/images/scenes/evaratds.webp",
+    seo: {
+      title: "EvaraTDS | IoT TDS Water Quality Monitor for RO and Tanks",
+      description:
+        "Real-time IoT TDS and temperature monitor, 0 to 2000 ppm, with threshold alerts, 30-day battery, IP67. For RO plants, treatment plants and community water.",
+      topic: "IoT TDS and water quality monitoring",
+      keywords: ["IoT TDS water quality monitor", "RO water quality monitoring", "real-time TDS sensor", "water quality alerts", "TDS monitoring device"],
+      related: ["evaratank", "evaraflow", "evaravalve"],
+      faq: [
+        { q: "What does EvaraTDS measure?", a: "Total dissolved solids from 0 to 2000 ppm at 1 ppm resolution and 2% full-scale accuracy, plus water temperature, which it uses to compensate the reading." },
+        { q: "Where is it used?", a: "Drinking water lines, RO plant outlets, water treatment plants, industrial process water, aquaculture and community water projects. Wall or pole mount." },
+        { q: "How long does it run and how does it connect?", a: "Up to 30 days on its 5200 mAh battery, reporting over 4G, NB-IoT, WiFi or LoRaWAN every 1 to 15 minutes." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "teal",
   },
@@ -872,6 +973,19 @@ export const products: Product[] = [
     image: "/images/products/evararain.webp",
     highlights: [{ label: "Resolution", value: "0.2 mm per tip" }, { label: "Accuracy", value: "±2%" }, { label: "Battery life", value: "2 years" }],
     scene: "/images/scenes/evararain.webp",
+    seo: {
+      title: "EvaraRain | IoT Tipping Bucket Rain Gauge with Alerts",
+      description:
+        "Self-emptying IoT tipping bucket rain gauge, 0.2 mm per tip, 2% accuracy. Real-time rainfall depth and intensity with heavy-rain alerts, two-year battery, IP65.",
+      topic: "IoT rain gauge for real-time rainfall monitoring",
+      keywords: ["IoT rain gauge", "tipping bucket rain gauge", "rainfall monitoring system", "heavy rainfall alert", "flood early warning sensor"],
+      related: ["evaradeep", "evaratank"],
+      faq: [
+        { q: "How accurate is EvaraRain?", a: "Each tip of the bucket registers 0.2 mm of rainfall, with 2% accuracy across 0 to 9999 mm of depth and 0 to 300 mm per hour of intensity." },
+        { q: "Does it need emptying?", a: "No. The tipping bucket empties itself, so it runs unattended for the life of its two-year battery." },
+        { q: "How is it mounted and how does it report?", a: "Pole or flat mount, IP65 rated, reporting every 1 to 15 minutes over 4G, NB-IoT, WiFi or LoRaWAN into EvaraOne." },
+      ],
+    },
     hasSpecSheet: true,
     accent: "leaf",
   },

@@ -9,7 +9,7 @@ import { SmoothScroll } from "@/components/providers/smooth-scroll";
 import { RouteTransition } from "@/components/providers/route-transition";
 import { ContactDialogProvider } from "@/components/contact/contact-dialog";
 import { JsonLd } from "@/components/seo/json-ld";
-import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from "@/lib/site";
+import { SITE_URL, SITE_NAME, SITE_TITLE, SHARE_TITLE, SITE_DESCRIPTION } from "@/lib/site";
 import { company } from "@/lib/evara-data";
 import "./globals.css";
 
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: SITE_TITLE,
+    title: SHARE_TITLE,
     description: SITE_DESCRIPTION,
     locale: "en_IN",
     images: [
@@ -68,13 +68,13 @@ export const metadata: Metadata = {
         url: "/images/og.jpg",
         width: 1200,
         height: 630,
-        alt: "EvaraTech smart water devices standing in water",
+        alt: "EvaraTech smart water monitoring devices: EvaraFlow, EvaraTank and EvaraValve",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
+    title: SHARE_TITLE,
     description: SITE_DESCRIPTION,
     images: ["/images/og.jpg"],
   },
@@ -99,14 +99,27 @@ export const viewport: Viewport = {
   ],
 };
 
+// Organization entity. Every property here is a fact the site already
+// states; nothing is estimated. `@id` gives the product pages a stable node
+// to point their `brand` and `manufacturer` at, so search engines connect
+// the seven instruments to one company.
 const organizationLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
   name: SITE_NAME,
   legalName: company.legalName,
+  alternateName: "EvaraTech Private Limited",
   url: SITE_URL,
-  logo: `${SITE_URL}/images/brand/evaratech-logo.png`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${SITE_URL}/images/brand/evaratech-logo.png`,
+    width: 512,
+    height: 495,
+  },
+  image: `${SITE_URL}/images/og.jpg`,
   description: SITE_DESCRIPTION,
+  slogan: company.tagline,
   email: company.email,
   foundingDate: "2025-10-10",
   founders: company.founders.map((f) => ({
@@ -120,17 +133,31 @@ const organizationLd = {
     addressRegion: "Telangana",
     addressCountry: "IN",
   },
-  areaServed: "IN",
-  sameAs: [SITE_URL],
+  contactPoint: {
+    "@type": "ContactPoint",
+    contactType: "sales",
+    email: company.email,
+    availableLanguage: ["en"],
+  },
+  areaServed: { "@type": "Country", name: "India" },
+  knowsAbout: [
+    "Smart water management",
+    "IoT water level monitoring",
+    "Borewell monitoring",
+    "Water meter retrofit",
+    "Water quality monitoring",
+  ],
 };
 
 const websiteLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
   name: SITE_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
-  publisher: { "@type": "Organization", name: SITE_NAME },
+  inLanguage: "en",
+  publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

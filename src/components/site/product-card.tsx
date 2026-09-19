@@ -60,7 +60,7 @@ function ProductCardInner({
           {product.image ? (
             <Image
               src={product.image}
-              alt={`${product.name} device`}
+              alt={`${product.name}, ${product.seo.topic}`}
               fill
               sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 90vw"
               className="tilt-lift object-contain p-5 drop-shadow-[0_14px_18px_rgba(15,33,56,0.16)] transition-transform duration-500 group-hover:scale-[1.04]"

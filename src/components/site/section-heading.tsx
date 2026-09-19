@@ -11,6 +11,10 @@ type SectionHeadingProps = {
   align?: "left" | "center";
   className?: string;
   tone?: "default" | "inverted";
+  /** The element for the title. Use "p" for a visual duplicate of a heading
+   *  that already exists elsewhere in the DOM (a desktop and a mobile layout
+   *  both in the tree), so the page keeps one H2 per topic. */
+  as?: "h2" | "p";
 };
 
 export function SectionHeading({
@@ -20,7 +24,9 @@ export function SectionHeading({
   align = "left",
   className,
   tone = "default",
+  as = "h2",
 }: SectionHeadingProps) {
+  const Title = as;
   return (
     <motion.div
       variants={fadeUp}
@@ -43,14 +49,14 @@ export function SectionHeading({
           {kicker}
         </p>
       )}
-      <h2
+      <Title
         className={cn(
-          "text-balance text-[1.85rem] leading-[1.12] font-semibold tracking-tight sm:text-4xl lg:text-5xl",
+          "font-heading text-balance text-[1.85rem] leading-[1.12] font-semibold tracking-tight sm:text-4xl lg:text-5xl",
           tone === "inverted" ? "text-white" : "text-evara-ink"
         )}
       >
         {title}
-      </h2>
+      </Title>
       {description && (
         <p
           className={cn(

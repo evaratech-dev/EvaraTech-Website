@@ -145,13 +145,15 @@ export function ProblemHero() {
       {/* Copy, vertically centred in the space above the stat bar */}
       <Container className="relative z-10 flex flex-1 flex-col justify-center pt-28 pb-8 sm:pt-32">
         <div className="max-w-3xl">
-          <MaskReveal trigger="mount">
-            <p className="font-mono text-[11px] tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
-              AI · IoT · Climate tech
-            </p>
-          </MaskReveal>
-
-          <h1 className="mt-5 font-heading text-[2.4rem] leading-[1.04] font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.9rem] 2xl:text-[4.5rem]">
+          {/* The small line is inside the H1 on purpose: the heading then
+              states what the company does before the slogan, which is what
+              a screen reader announces and what a search engine indexes. */}
+          <h1 className="font-heading text-[2.4rem] leading-[1.04] font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.9rem] 2xl:text-[4.5rem]">
+            <MaskReveal trigger="mount">
+              <span className="mb-5 block font-mono text-[11px] font-medium tracking-[0.24em] text-evara-teal-300 uppercase sm:text-xs">
+                Smart water management with IoT and AI
+              </span>
+            </MaskReveal>
             <MaskReveal trigger="mount" delay={0.05}>Every litre measured.</MaskReveal>
             <span className="block overflow-hidden">
               <motion.span
